@@ -1,6 +1,7 @@
 import sys
 from lib.core import settings
 from google import search
+from lib.core.settings import LOGGER
 
 
 class DorkScanner(object):
@@ -21,8 +22,6 @@ class DorkScanner(object):
             res.append(next(index))
             limit -= 1
             found += 1
-            sys.stdout.write("\rFound %i links.." % found)
-            sys.stdout.flush()
         return res
 
     def check_urls_for_queries(self):
@@ -30,7 +29,7 @@ class DorkScanner(object):
             http://google.com <- False
             http://example.com/php?id=2 <- True """
         filename = settings.create_random_filename()
-        print("File being saved to: {}".format(filename))
+        LOGGER.info("File being saved to: {}".format(filename))
         with open("{}\\{}.txt".format(settings.DORK_SCAN_RESULTS_PATH, filename), "a+") as results:
             for url in self.connect_to_search_engine():
                 match = settings.QUERY_REGEX.match(url)  # Match by regex for anything that has a ?=<PARAM> in it
@@ -38,6 +37,6 @@ class DorkScanner(object):
                     results.write(url + "\n")
         amount_of_urls = len(open(settings.DORK_SCAN_RESULTS_PATH + "\\" + filename + ".txt", 'r').readlines())
         success_rate = ((amount_of_urls // 10) + 1) * 10
-        return "\nFound a total of {} usable links with query (GET) parameters, urls have been saved to {}\\{}.txt. " \
-               "This Dork has a success rate of {}\n%".format(amount_of_urls, settings.DORK_SCAN_RESULTS_PATH, filename,
-                                                              success_rate)
+        return "Found a total of {} usable links with query (GET) parameters, urls have been saved to {}\\{}.txt. " \
+               "This Dork has a success rate of {}%".format(amount_of_urls, settings.DORK_SCAN_RESULTS_PATH, filename,
+                                                            success_rate)
