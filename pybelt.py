@@ -8,6 +8,8 @@ from lib.core.dork_check import DorkScanner
 from lib.core.errors import GoogleBlockException
 from lib.core.settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
 from lib.core.settings import LOGGER
+from lib.core.sql_scan import SQLiScanner
+from lib.core.settings import QUERY_REGEX
 
 if __name__ == '__main__':
     opts = argparse.ArgumentParser()
@@ -24,24 +26,31 @@ if __name__ == '__main__':
     opts.add_argument('-C', '--hash-file', metavar="HASHFILE", dest="hashfilecracking",
                       help=argparse.SUPPRESS)
     args = opts.parse_args()
-    print(BANNER)
-    if args.dorkcheck:
-        LOGGER.info("Starting dork scan, using query: '{}'..".format(args.dorkcheck))
-        try:
-            LOGGER.info(DorkScanner(args.dorkcheck).check_urls_for_queries())
-        except HTTPError:
-            LOGGER.error(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
-            exit(1)
-    if args.dorkfilecheck:
-        LOGGER.info("Starting scan on file: {}".format(args.dorkfilecheck))
-        with open(args.dorkfilecheck, 'r+') as data:
-            for url in data.readlines():
-                LOGGER.info("Running with query: {}".format(url))
-                try:
-                    LOGGER.info(DorkScanner(url.strip()).check_urls_for_queries())
-                except HTTPError:
-                    LOGGER.error(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
-                    exit(1)
-    '''if args.portscan:
-        print("Starting port scanning on host: {}".format(args.portscan))
-        print(PortScanner(args.portscan).connect_to_host())'''
+    #print(BANNER)
+    try:
+        if args.sqliscan:
+            if QUERY_REGEX.match(args.sqliscan):
+                LOGGER.info("Starting SQLi scan on {}".format(args.sqliscan))
+                LOGGER.info(SQLiScanner(args.sqliscan).sql_error_based_search())
+            else:
+                LOGGER.error("URL does not contain a query (GET) parameter. Example: http://example.com/php?id=2")
+    except KeyboardInterrupt:
+        LOGGER.fatal("User aborted scanning sequence.")
+        '''if args.dorkcheck:
+            LOGGER.info("Starting dork scan, using query: '{}'..".format(args.dorkcheck))
+            try:
+                LOGGER.info(DorkScanner(args.dorkcheck).check_urls_for_queries())
+            except HTTPError:
+                LOGGER.error(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
+                exit(1)
+            if args.dorkfilecheck:
+                LOGGER.info("Starting scan on file: {}".format(args.dorkfilecheck))
+                with open(args.dorkfilecheck, 'r+') as data:
+                    for url in data.readlines():
+                    LOGGER.info("Running with query: {}".format(url))
+                    try:
+                        LOGGER.info(DorkScanner(url.strip()).check_urls_for_queries())
+                    except HTTPError:
+                        LOGGER.error(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
+                        exit(1)
+    except KeyboardInterrupt:'''

@@ -1,4 +1,3 @@
-import sys
 from lib.core import settings
 from google import search
 from lib.core.settings import LOGGER
@@ -32,7 +31,7 @@ class DorkScanner(object):
         LOGGER.info("File being saved to: {}".format(filename))
         with open("{}\\{}.txt".format(settings.DORK_SCAN_RESULTS_PATH, filename), "a+") as results:
             for url in self.connect_to_search_engine():
-                match = settings.QUERY_REGEX.match(url)  # Match by regex for anything that has a ?=<PARAM> in it
+                match = settings.QUERY_REGEX.match(url)  # Match by regex for anything that has a ?<PARAM>= in it
                 if match:
                     results.write(url + "\n")
         amount_of_urls = len(open(settings.DORK_SCAN_RESULTS_PATH + "\\" + filename + ".txt", 'r').readlines())

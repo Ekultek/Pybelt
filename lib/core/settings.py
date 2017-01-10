@@ -47,6 +47,13 @@ RANDOM_COMMON_COLUMN = random.choice(open("{}/lib/core/text_files/common_columns
 # Search query regex to make sure the URLS have a GET parameter
 QUERY_REGEX = re.compile(r"(.*)[?|#](.*){1}\=(.*)")
 
+SQLI_ERROR_REGEX = (
+    re.compile(r"SQL syntax.*MySQL"),  # You have an error in your SQL syntax
+    re.compile("Warning.*mysql_.*"),  # Warning MySQL syntax contains an error at line ..
+    re.compile(r"valid MySQL result"),  # Your search has produced a invalid MySQL result
+    re.compile(r"MySqlClient\."),  # You have an error located at .. in your MySQL client server
+)
+
 # Sexy ass banner
 BANNER = """
         \033[94m##### ##                    /              ###

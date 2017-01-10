@@ -1,21 +1,34 @@
 import urllib2
+import random
+from urlparse import urlparse
 from bs4 import BeautifulSoup
 from lib.core.settings import RANDOM_COMMON_COLUMN
+from lib.core.settings import LOGGER
+from lib.core.settings import SQLI_ERROR_REGEX
 
 
 class SQLiScanner(object):
 
     """ Scan a URL for SQL injection possibilities. """
 
+    non_injectable = []
+
     def __init__(self, url):
         self.url = url
+        self.int = random.randint(1, 13)
         self.error_syntax = ["'", "--", ';', '"', "/*", "'/*", "'--", '"--', "';", '";', '`']
-        self.blind_syntax = [" AND 13=13", " OR 13=13", " AND 1=1", " OR 1=1"]
-        self.union_syntax = [" union false {}".format(RANDOM_COMMON_COLUMN.strip()), " UNION {}".format(RANDOM_COMMON_COLUMN.strip())]
+        self.blind_syntax = [" AND %i=%i" % (self.int, self.int),
+                             " OR %i=%i" % (self.int, self.int)]
+        self.union_syntax = [" union false {}".format(RANDOM_COMMON_COLUMN.strip()),
+                             " UNION {}".format(RANDOM_COMMON_COLUMN.strip())]
+
+    @staticmethod
+    def obtain_inject_query(url):
+        return urlparse(url).query
 
     def add_error_based_to_url(self):
         """ Add SQL closing syntax to the URL
-        >>> print(self.add_blind_based_to_url())
+        >>> print(self.add_error_based_to_url())
         http://example.com/php?id=2'
         http://example.com/php?id=2--
         ..."""
@@ -46,10 +59,14 @@ class SQLiScanner(object):
 
         return union_based_injection
 
-    def attempt_connection_to_urls(self):
-        print("Starting error based search..")
+    def sql_error_based_search(self):
+        soup = []
+        LOGGER.info("Starting error based search..")
         for url in self.add_error_based_to_url():
             data = urllib2.urlopen(url).read()
-            soup = BeautifulSoup(data, 'html.parser')
-            print soup
-
+            soup = [BeautifulSoup(data, 'html.parser')]
+            query = self.obtain_inject_query(self.url)
+        for regex in SQLI_ERROR_REGEX:
+            for html in soup:
+                if regex.match(str(html)):
+                    return "%s appears to be error based SQL injectable with parameter %s" % (self.url, query)
