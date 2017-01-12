@@ -1,17 +1,20 @@
 import urllib2
 import random
+import re
 from urlparse import urlparse
 from bs4 import BeautifulSoup
 from lib.core.settings import RANDOM_COMMON_COLUMN
 from lib.core.settings import LOGGER
 from lib.core.settings import SQLI_ERROR_REGEX
+from lib.core.settings import SYNTAX_REGEX
 
 
 class SQLiScanner(object):
 
     """ Scan a URL for SQL injection possibilities. """
 
-    non_injectable = []
+    url_syntax = []
+    vulnerable = False
 
     def __init__(self, url):
         self.url = url
@@ -59,14 +62,31 @@ class SQLiScanner(object):
 
         return union_based_injection
 
-    def sql_error_based_search(self):
+    def sqli_search(self):
         soup = []
-        LOGGER.info("Starting error based search..")
-        for url in self.add_error_based_to_url():
-            data = urllib2.urlopen(url).read()
-            soup = [BeautifulSoup(data, 'html.parser')]
-            query = self.obtain_inject_query(self.url)
-        for regex in SQLI_ERROR_REGEX:
+        count = 0
+        current_sqli_count = 0
+        query = self.obtain_inject_query(self.url)
+        current_sqli_check = [self.add_blind_based_to_url(),
+                              self.add_error_based_to_url(),
+                              self.add_union_based_injection()]
+
+        LOGGER.info("Starting SQLi search")
+        while self.vulnerable is False:
+            for url in current_sqli_check[current_sqli_count]:
+                self.url_syntax = [re.search(SYNTAX_REGEX, url).group()]
+                data = urllib2.urlopen(url).read()
+                soup = [BeautifulSoup(data, 'html.parser')]
             for html in soup:
-                if regex.match(str(html)):
-                    return "%s appears to be error based SQL injectable with parameter %s" % (self.url, query)
+                count += 1
+                for regex in SQLI_ERROR_REGEX:
+                    if regex.findall(str(html)):
+                        self.vulnerable = True
+                        LOGGER.info("%s appears to have a SQL injection vulnerability at %s%s" % (
+                            self.url, query, self.url_syntax[count - 1]))
+                    else:
+                        current_sqli_count += 1
+                        self.url_syntax = self.url_syntax[::]
+                        count = 0
+        if self.vulnerable is False:
+            LOGGER.warning("%s is not vulnerable to SQL injection, error, blind, or union based" % self.url)

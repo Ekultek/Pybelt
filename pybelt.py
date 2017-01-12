@@ -31,7 +31,7 @@ if __name__ == '__main__':
         if args.sqliscan:
             if QUERY_REGEX.match(args.sqliscan):
                 LOGGER.info("Starting SQLi scan on {}".format(args.sqliscan))
-                LOGGER.info(SQLiScanner(args.sqliscan).sql_error_based_search())
+                SQLiScanner(args.sqliscan).sqli_search()
             else:
                 LOGGER.error("URL does not contain a query (GET) parameter. Example: http://example.com/php?id=2")
     except KeyboardInterrupt:

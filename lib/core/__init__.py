@@ -5,3 +5,4 @@ from settings import BANNER
 from settings import RANDOM_COMMON_COLUMN
 from settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
 from settings import SQLI_ERROR_REGEX
+from settings import SYNTAX_REGEX

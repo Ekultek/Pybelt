@@ -54,6 +54,8 @@ SQLI_ERROR_REGEX = (
     re.compile(r"MySqlClient\."),  # You have an error located at .. in your MySQL client server
 )
 
+SYNTAX_REGEX = re.compile(r"\W+$")
+
 # Sexy ass banner
 BANNER = """
         \033[94m##### ##                    /              ###
