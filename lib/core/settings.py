@@ -1,8 +1,9 @@
-import random
 import os
 import uuid
 import re
 import logging
+import random
+import base64
 from colorlog import ColoredFormatter
 
 log_level = logging.INFO
@@ -33,13 +34,14 @@ VERSION_STRING = "\033[92m{}\033[0m(\033[{}m\033[1mdev\033[0m)".format(VERSION, 
 CLONE_LINK = "https://github.com/ekultek/pybelt.git"
 
 # Basic legal disclaimer
-LEGAL_DISC = "legal disclaimer: This program is intended for learning purposes, any malicious intent is on you, it is the end users responsibility to obey all laws, regulations, and rules of your respective country or place of origin. For further information about this please see the legal information file under docs or run the --legal flag"
+LEGAL_DISC = "[!] legal disclaimer: This program is intended for learning purposes, any malicious intent is on you, it is the end users responsibility to obey all laws, regulations, and rules of your respective country or place of origin. For further information about this please see the legal information file under docs or run the --legal flag"
+LONG_LEGAL_DISCLAIMER = open("lib/core/text_files/legal.txt").read()
 
 # Random dork to use for basic sqli searches
-RANDOM_DORK = random.choice(open("{}/lib/core/text_files/dorks.txt".format(PATH)).readlines())
+# RANDOM_DORK = random.choice(open("{}/lib/core/text_files/dorks.txt".format(PATH)).readlines())
 
 # Random saying to display on the banner
-RANDOM_SAYING = random.choice(open("{}/lib/core/text_files/sayings.txt".format(PATH)).readlines())
+SAYING = "The Hackers ToolBelt.."
 
 # Random common column names
 RANDOM_COMMON_COLUMN = random.choice(open("{}/lib/core/text_files/common_columns.txt".format(PATH)).readlines())
@@ -79,10 +81,9 @@ BANNER = """
     ###             /      ###/\033[0m      %s
 
 \033[94m%s
-%s\033[0m
 
-\033[91m[!] %s\033[0m\n\n
-""" % (VERSION_STRING, RANDOM_SAYING.strip(), CLONE_LINK, LEGAL_DISC)
+%s\033[0m\n\n
+""" % (VERSION_STRING, SAYING.strip(), CLONE_LINK)
 
 # Path the the search results from a dork scan
 DORK_SCAN_RESULTS_PATH = r"{}\lib\core\dork_check\scan_results".format(os.getcwd())
@@ -97,10 +98,10 @@ GOOGLE_TEMP_BLOCK_ERROR_MESSAGE += "\tD) Curse my name and this program"
 
 # List of reserved port numbers, these are the ports that you want to check
 RESERVED_PORTS = {
-    1, 5, 7, 18, 20, 21, 22, 23, 25, 29, 37,  42, 43, 49, 53, 69, 70,
-    79, 80, 103, 108, 109, 110, 115, 118, 119, 137, 139, 143, 150, 156,
-    161, 179, 190, 194, 197, 389, 396, 443, 444, 445, 458, 546, 547, 563,
-    569, 1080
+    1,   5,   7,   18,  20,  21,  22,  23,  25,  29,  37,  42,  43,  49,
+    53,  69,  70,  79,  80,  103, 108, 109, 110, 115, 118, 119, 137, 139,
+    143, 150, 156, 161, 179, 190, 194, 197, 389, 396, 443, 444, 445, 458,
+    546, 547, 563, 569, 1080
 }
 
 
@@ -109,3 +110,8 @@ def create_random_filename():
     >>> print(create_random_filename())
     56558c08-ee1f-40b4-b048-be4c4066f8b6 """
     return str(uuid.uuid4())
+
+
+def decode64(string):
+    """ Decode a string from base64 """
+    return base64.b64decode(string)

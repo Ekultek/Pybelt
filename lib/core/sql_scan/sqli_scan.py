@@ -63,18 +63,18 @@ class SQLiScanner(object):
         return union_based_injection
 
     def sqli_search(self):
+        """ Search for SQL injection in the provided URL[error based injection] """
         soup = []
         count = 0
         current_sqli_count = 0
         query = self.obtain_inject_query(self.url)
-        current_sqli_check = [self.add_blind_based_to_url(),
-                              self.add_error_based_to_url(),
-                              self.add_union_based_injection()]
+        current_sqli_check = [self.add_error_based_to_url,
+                              self.add_blind_based_to_url,
+                              self.add_union_based_injection]
 
         LOGGER.info("Starting SQLi search")
         while self.vulnerable is False:
-            for url in current_sqli_check[current_sqli_count]:
-                self.url_syntax = [re.search(SYNTAX_REGEX, url).group()]
+            for url in current_sqli_check[current_sqli_count]():
                 data = urllib2.urlopen(url).read()
                 soup = [BeautifulSoup(data, 'html.parser')]
             for html in soup:
@@ -82,11 +82,11 @@ class SQLiScanner(object):
                 for regex in SQLI_ERROR_REGEX:
                     if regex.findall(str(html)):
                         self.vulnerable = True
-                        LOGGER.info("%s appears to have a SQL injection vulnerability at %s%s" % (
-                            self.url, query, self.url_syntax[count - 1]))
+                        return "%s appears to have a SQL injection vulnerability at %s" % (
+                            self.url, query)
                     else:
                         current_sqli_count += 1
                         self.url_syntax = self.url_syntax[::]
                         count = 0
         if self.vulnerable is False:
-            LOGGER.warning("%s is not vulnerable to SQL injection, error, blind, or union based" % self.url)
+            return "%s is not vulnerable to SQL injection." % self.url
