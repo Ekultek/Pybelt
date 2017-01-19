@@ -19,7 +19,7 @@ Simple port scanning, provide a host to scan and find the open ports to forward 
 ###Installation
 You can either clone the repository 
 `git clone https://github.com/ekultek/pybelt.git`
-or download the latest release as a zip/tar ball [here](https://github.com/ekultek/pybelt.git)
+or download the latest release as a zip/tar ball [here](https://github.com/Ekultek/PyBelt/releases/tag/1.0)
 
 
 Once you have the program installed cd into the directory and run the following command:
@@ -34,7 +34,7 @@ This will install all of the programs needed libraries and should be able to be 
 `python pybelt.py -d idea?id=55` Will run a Dork check on the given Google Dork
 
 ##Misc info you probably don't care about
-
+ 
 ###License
 This program is licensed under the MIT license, you can the license in the DOCS folder
 
