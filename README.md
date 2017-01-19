@@ -6,13 +6,13 @@ Why use PyBelt? Well for one, it's written in Python, everybody likes Python. Fo
 
 ##ScreenShots
 SQL Injection scanning made easy, just provide a URL and watch it work
-![alt text](http://imgur.com/fPqz3In)
+![alt text](https://thumb.ibb.co/bWdnaa/sqli_scan.png)
 
 Dork checker, have some Dorks you're not sure of? Go ahead and run the Dork check with the Dork as an argument, it will pull 100 URLs and give you success rate for the Dork
-![alt text](http://imgur.com/a/gwHb4)
+![alt text](https://thumb.ibb.co/iJyaTv/dork_scan.png)
 
 Simple port scanning, provide a host to scan and find the open ports to forward too
-![alt text](http://imgur.com/Otr8e3o)
+![alt text](https://thumb.ibb.co/nJwjMF/port_scan.png)
 
 ##Usage
 
