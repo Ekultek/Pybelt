@@ -1,5 +1,5 @@
 import socket
-import sys
+from lib.core.settings import LOGGER
 from lib.core.settings import RESERVED_PORTS
 
 
@@ -16,8 +16,7 @@ class PortScanner(object):
         host = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         for port in self.ports:
             try:
-                sys.stdout.write("\rAttempting to connect to port: {}  ".format(port))
-                sys.stdout.flush()
+                LOGGER.info("Attempting to connect to port: {}".format(port))
                 attempt = host.connect_ex((self.host, port))  # Connect to the host
                 if attempt:  # If connection fails
                     pass
@@ -27,6 +26,6 @@ class PortScanner(object):
                 pass
         host.close()
         if not self.connection_made:
-            return "\nNo connections could be made."
+            LOGGER.fatal("No connections could be made.")
         else:
-            return "\nConnection made on port: {}.".format(''.join(str(self.connection_made)))
+            return "Connection made on port: {}.".format(''.join(str(self.connection_made)))
