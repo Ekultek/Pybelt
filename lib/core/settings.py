@@ -21,7 +21,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version
-VERSION = "1.0"
+VERSION = "1.0.1"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -57,6 +57,8 @@ SQLI_ERROR_REGEX = (
 )
 
 SYNTAX_REGEX = re.compile(r"\W+$")
+
+IP_ADDRESS_REGEX = re.compile("^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
 
 # Sexy ass banner
 BANNER = """
