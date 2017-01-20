@@ -7,3 +7,4 @@ from settings import LONG_LEGAL_DISCLAIMER
 from settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
 from settings import SQLI_ERROR_REGEX
 from settings import SYNTAX_REGEX
+from settings import IP_ADDRESS_REGEX
