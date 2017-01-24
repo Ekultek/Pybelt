@@ -2,11 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="153cde65-5b97-4936-b1c8-15f106c57836" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DOCS/changelog.txt" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/core/hash_cracking/hash_cracker.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/text_files/not_used_yet/mitm/__init__.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/core/dork_check/scan_results/098b34e7-605f-4c37-8e3f-dbf383abfc54.txt" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/DOCS/changelog.txt" afterPath="$PROJECT_DIR$/docs/changelog.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/DOCS/license.md" afterPath="$PROJECT_DIR$/docs/license.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/__init__.py" afterPath="$PROJECT_DIR$/lib/core/hash_cracking/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/common_columns.txt" afterPath="$PROJECT_DIR$/lib/text_files/common_columns.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/legal.txt" afterPath="$PROJECT_DIR$/lib/text_files/legal.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/not_used_yet/__init__.py" afterPath="$PROJECT_DIR$/lib/text_files/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/not_used_yet/dorks.txt" afterPath="$PROJECT_DIR$/lib/text_files/not_used_yet/dorks.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/not_used_yet/hash_cracking/__init__.py" afterPath="$PROJECT_DIR$/lib/text_files/not_used_yet/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/not_used_yet/hash_cracking/hash_cracker.py" afterPath="$PROJECT_DIR$/lib/text_files/not_used_yet/cookie_theif/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/not_used_yet/rand_user_agents.txt" afterPath="$PROJECT_DIR$/lib/text_files/not_used_yet/rand_user_agents.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/not_used_yet/sayings.txt" afterPath="$PROJECT_DIR$/lib/text_files/not_used_yet/sayings.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/core/text_files/not_used_yet/wordlist.txt" afterPath="$PROJECT_DIR$/lib/text_files/wordlist.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/core/__init__.py" afterPath="$PROJECT_DIR$/lib/core/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/core/settings.py" afterPath="$PROJECT_DIR$/lib/core/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/core/sql_scan/sqli_scan.py" afterPath="$PROJECT_DIR$/lib/core/sql_scan/sqli_scan.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pybelt.py" afterPath="$PROJECT_DIR$/pybelt.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,11 +48,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pybelt.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pybelt.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pybelt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+            <state relative-caret-position="904">
+              <caret line="71" column="36" lean-forward="false" selection-start-line="71" selection-start-column="36" selection-end-line="71" selection-end-column="36" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -45,35 +60,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="changelog.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DOCS/changelog.txt">
+      <file leaf-file-name="wordlist.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/text_files/wordlist.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+            <state relative-caret-position="544">
+              <caret line="79" column="10" lean-forward="true" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="port_scanning.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/core/port_scan/port_scanning.py">
+      <file leaf-file-name="changelog.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/changelog.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="27" column="36" lean-forward="false" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <marker date="1484856345215" expanded="true" signature="1028:1100" ph="..." />
-              </folding>
+            <state relative-caret-position="119">
+              <caret line="7" column="40" lean-forward="false" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="731">
-                <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+              <first_editor relative-caret-position="221">
+                <caret line="13" column="55" lean-forward="false" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -81,8 +93,32 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="sqli_scan.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/core/sql_scan/sqli_scan.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="46" column="52" lean-forward="false" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hash_cracker.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/core/hash_cracking/hash_cracker.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="628">
+              <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="license.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DOCS/license.md">
+        <entry file="file://$PROJECT_DIR$/docs/license.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="391">
@@ -104,21 +140,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/core/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="37" lean-forward="false" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
+            <state relative-caret-position="187">
+              <caret line="11" column="35" lean-forward="false" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -126,21 +152,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sqli_scan.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/core/sql_scan/sqli_scan.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/core/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1020">
-              <caret line="60" column="19" lean-forward="false" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
+            <state relative-caret-position="454">
+              <caret line="115" column="0" lean-forward="true" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -160,6 +176,9 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>RANDOM_CO</find>
+      <find>769d5ae84654210bd1aef4fd1a79d685147341df4f8197c9008d97a43380f4b286a336d4b95f16fff56fecbfecd8925479b2ff17400ba834d259c3af013ac496</find>
+      <find>12345678</find>
+      <find>lib/core/text</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -174,7 +193,6 @@
         <option value="$PROJECT_DIR$/lib/core/text_files/common_columns.txt" />
         <option value="$PROJECT_DIR$/lib/core/text_files/dorks.txt" />
         <option value="$PROJECT_DIR$/lib/core/text_files/rand_user_agents.txt" />
-        <option value="$PROJECT_DIR$/lib/core/text_files/wordlist.txt" />
         <option value="$PROJECT_DIR$/lib/core/dork_check/c31bc0bd-d8fe-442b-95e2-3101f7443827.txt" />
         <option value="$PROJECT_DIR$/lib/core/dork_check/ff83b421-3b06-462d-a20e-34fb921f2eff.txt" />
         <option value="$PROJECT_DIR$/lib/core/dork_check/__init__.py" />
@@ -198,15 +216,23 @@
         <option value="$PROJECT_DIR$/lib/core/text_files/fixed.txt" />
         <option value="$PROJECT_DIR$/lib/core/text_files/sayings.txt" />
         <option value="$PROJECT_DIR$/lib/core/text_files/legal.txt" />
-        <option value="$PROJECT_DIR$/lib/core/sql_scan/sqli_scan.py" />
         <option value="$PROJECT_DIR$/lib/core/port_scan/port_scanning.py" />
         <option value="$PROJECT_DIR$/DOCS/license.md" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/lib/core/settings.py" />
-        <option value="$PROJECT_DIR$/lib/core/__init__.py" />
-        <option value="$PROJECT_DIR$/pybelt.py" />
         <option value="$PROJECT_DIR$/DOCS/changelog.txt" />
+        <option value="$PROJECT_DIR$/lib/core/text_files/not_used_yet/hash_cracking/hash_cracker.py" />
+        <option value="$PROJECT_DIR$/lib/core/hash_cracking/__init__.py" />
+        <option value="$PROJECT_DIR$/examples.txt" />
+        <option value="$PROJECT_DIR$/lib/core/text_files/wordlist.txt" />
+        <option value="$PROJECT_DIR$/lib/core/hash_cracking/hash_cracker.py" />
+        <option value="$PROJECT_DIR$/lib/core/__init__.py" />
+        <option value="$PROJECT_DIR$/lib/text_files/wordlist.txt" />
+        <option value="$PROJECT_DIR$/docs/changelog.txt" />
+        <option value="$PROJECT_DIR$/lib/core/settings.py" />
+        <option value="$PROJECT_DIR$/lib/core/sql_scan/sqli_scan.py" />
+        <option value="$PROJECT_DIR$/.google-cookie" />
+        <option value="$PROJECT_DIR$/pybelt.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -255,6 +281,52 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pybelt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pybelt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pybelt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pybelt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="text_files" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pybelt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pybelt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -268,11 +340,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\z-perkins-thomas\Documents\bin\python\PyBelt\lib\core\text_files" />
-      <recent name="C:\Users\z-perkins-thomas\Documents\bin\python\PyBelt\lib\core\text_files\not_used_yet" />
-      <recent name="C:\Users\z-perkins-thomas\Documents\bin\python\PyBelt\lib\core" />
+      <recent name="C:\Users\z-perkins-thomas\Documents\bin\python\pybelt\lib" />
+      <recent name="C:\Users\z-perkins-thomas\Documents\bin\python\pybelt\lib\core\text_files" />
       <recent name="C:\Users\z-perkins-thomas\Documents\bin\python\pybelt\lib\core" />
-      <recent name="C:\Users\z-perkins-thomas\Documents\bin\python\pybelt\lib\core\not_implemented_yet" />
+      <recent name="C:\Users\z-perkins-thomas\Documents\bin\python\pybelt\lib\core\text_files\not_used_yet\hash_cracking" />
+      <recent name="C:\Users\z-perkins-thomas\Documents\bin\python\PyBelt\lib\core\text_files" />
     </key>
   </component>
   <component name="RunManager">
@@ -530,16 +602,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1436" y="-198" width="908" height="1448" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18111111" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20333333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21893491" sideWeight="0.5088889" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32988167" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32988167" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21893491" sideWeight="0.4911111" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16198225" sideWeight="0.4911111" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -547,7 +620,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32988167" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -569,19 +641,8 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/core/dork_check/.google-cookie" />
-    <entry file="file://$PROJECT_DIR$/lib/core/dork_check/scan_results/3ed913b9-c6f8-427e-b610-cf08d0822ebe.txt" />
-    <entry file="file://$PROJECT_DIR$/lib/core/text_files/rand_user_agents.txt" />
-    <entry file="file://$PROJECT_DIR$/lib/core/dork_check/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="29" lean-forward="false" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/core/text_files/blah" />
     <entry file="file://$PROJECT_DIR$/lib/core/__init.py" />
-    <entry file="file://$PROJECT_DIR$/lib/core/text_files/common_columns.txt">
+    <entry file="file://$PROJECT_DIR$/lib/text_files/common_columns.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="2473" column="0" lean-forward="false" selection-start-line="2473" selection-start-column="0" selection-end-line="2473" selection-end-column="3" />
@@ -626,7 +687,6 @@
     <entry file="file://$PROJECT_DIR$/Connection" />
     <entry file="file://$PROJECT_DIR$/Attempting" />
     <entry file="file://$PROJECT_DIR$/lib/core/dork_check/scan_results/82818368-838d-4e17-908d-a3e057a3bc8e.txt" />
-    <entry file="file://$PROJECT_DIR$/.google-cookie" />
     <entry file="file://$PROJECT_DIR$/data.txt" />
     <entry file="file://$PROJECT_DIR$/lib/core/dork_check/dorks.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -647,7 +707,6 @@
     <entry file="file://$PROJECT_DIR$/fixed.txt" />
     <entry file="file://$PROJECT_DIR$/lib/core/text_files/sayings.txt" />
     <entry file="file://$PROJECT_DIR$/lib/core/text_files/sayings.txt" />
-    <entry file="file://$PROJECT_DIR$/lib/core/text_files/wordlist.txt" />
     <entry file="file://$PROJECT_DIR$/lib/core/errors/errors.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -656,42 +715,55 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/core/dork_check/scan_results/852ff6aa-5050-4baf-b08e-dea190f18065.txt" />
-    <entry file="file://$PROJECT_DIR$/lib/core/text_files/legal.txt" />
+    <entry file="file://$PROJECT_DIR$/lib/text_files/legal.txt" />
+    <entry file="file://$PROJECT_DIR$/lib/core/port_scan/port_scanning.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="27" column="36" lean-forward="false" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/text_files/not_used_yet/sayings.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/core/hash_cracking/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="785">
+          <caret line="0" column="1131944" lean-forward="false" selection-start-line="0" selection-start-column="1131816" selection-end-line="0" selection-end-column="1131944" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example.txt">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/core/sql_scan/sqli_scan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/core/port_scan/port_scanning.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="27" column="36" lean-forward="false" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <marker date="1484856345215" expanded="true" signature="1028:1100" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DOCS/license.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="391">
-            <caret line="23" column="41" lean-forward="false" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
-            <folding />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -705,10 +777,85 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/core/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="37" lean-forward="false" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
+        <state relative-caret-position="187">
+          <caret line="11" column="35" lean-forward="false" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/core/hash_cracking/hash_cracker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="628">
+          <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/license.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="391">
+            <caret line="23" column="41" lean-forward="false" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/changelog.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="40" lean-forward="false" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/core/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="115" column="0" lean-forward="true" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/core/sql_scan/sqli_scan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="46" column="52" lean-forward="false" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.google-cookie">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/text_files/wordlist.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="79" column="10" lean-forward="true" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pybelt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="904">
+          <caret line="71" column="36" lean-forward="false" selection-start-line="71" selection-start-column="36" selection-end-line="71" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -716,8 +863,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="731">
-            <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <first_editor relative-caret-position="221">
+            <caret line="13" column="55" lean-forward="false" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
             <folding />
           </first_editor>
           <second_editor />
@@ -727,42 +874,6 @@
         <state relative-caret-position="34">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/core/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="60" column="19" lean-forward="false" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DOCS/changelog.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pybelt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

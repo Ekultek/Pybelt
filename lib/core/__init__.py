@@ -8,3 +8,5 @@ from settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
 from settings import SQLI_ERROR_REGEX
 from settings import SYNTAX_REGEX
 from settings import IP_ADDRESS_REGEX
+from settings import create_wordlist
+from settings import WORDLIST_LINKS
