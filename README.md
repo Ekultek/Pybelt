@@ -1,18 +1,26 @@
-#PyBelt
-####The hackers tool belt
+#Pybelt
 
-PyBelt is a open source, hackers multi-tool much like a Gerber, it can be used for multiple purposes. No it does not come with a screw driver. but it does come with a port scanner! No it does not come with a knife, but it does come with a SQLi error based scanner! No it does not come with a can opener, it does however, come with a Dork Checker!
-Why use PyBelt? Well for one, it's written in Python, everybody likes Python. For two, you have multiple tools now at your finger tips, SQLi scanning, Dork checking, and port scanning all available in a free range quick motion with simple flags. 
+Pybelt is an open source hackers tool belt complete with:
+
+ - A port scanner
+ - SQL injection scanner
+ - Dork checker
+ - Hash cracker
+ 
+It is capable of cracking hashes without prior knowledge of the algorithm, scanning ports on a given host, searching for SQLi vulnerabilities in a given URL, and verifying that your Google dorks work like they should.
 
 ##ScreenShots
 SQL Injection scanning made easy, just provide a URL and watch it work
-![sqli](https://s23.postimg.org/3y1ljjl57/sqli_scan.png)
+![sqli](https://s29.postimg.org/vgufri8uf/sqli_scan.png)
 
 Dork checker, have some Dorks you're not sure of? Go ahead and run the Dork check with the Dork as an argument, it will pull 100 URLs and give you success rate for the Dork
-![dork](https://s23.postimg.org/ut71kpcqz/dork_scan.png)
+![dork](https://s29.postimg.org/m58dujwav/dork_scan.png)
 
 Simple port scanning, provide a host to scan and find the open ports to forward too
-![port](https://s23.postimg.org/9xpcn75xn/port_scan.png)
+![port](https://s29.postimg.org/qgwzjk37r/port_scan.png)
+
+Hash cracking made simple, provide the hash type at the end ":md5, :sha256, etc" for a specific hash, or ":all" for all algorithms available on your machine
+![hash](https://s29.postimg.org/802ksqn9j/hash_cracking.png)
 
 ##Usage
 
@@ -33,11 +41,9 @@ This will install all of the programs needed libraries and should be able to be 
 
 `python pybelt.py -d idea?id=55` Will run a Dork check on the given Google Dork
 
+`python pybelt.py -c 9a8b1b7eee229046fc2701b228fc2aff:all` Will attempt to crack the hash using all algorithms available on the computer
+
 ##Misc info you probably don't care about
  
 ###License
 This program is licensed under the MIT license, you can the license in the DOCS folder
-
-###Current version
-This program is currently in version 1.0, first release, this will be updated as the program grows
-
