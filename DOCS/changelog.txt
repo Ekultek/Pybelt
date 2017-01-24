@@ -1,6 +1,0 @@
-Version 1.0.1
-  - Added a version flag
-  - Edited some of the flags so that you have to input something that's useful. IE 127.0.0.1 for port scan
-  - Made a IP regex (simple yet effective)
-  - Edited requirements.txt
-  - Bumped the version number

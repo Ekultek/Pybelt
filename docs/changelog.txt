@@ -1,0 +1,16 @@
+Version 1.1.2
+  - Added a hash cracking system, check out the README for further information
+  - Created a new flag for downloading random wordlists
+  - Edited the SQLi scanner, it was failing and I didn't know, my bad
+  - Moved text_files directory to /lib
+  - Edited the README
+  - Changed the banner
+  - Edited a lot of the settings.py file
+  - Bumped the version number
+
+Version 1.0.1
+  - Added a version flag
+  - Edited some of the flags so that you have to input something that's useful. IE 127.0.0.1 for port scan
+  - Made a IP regex (simple yet effective)
+  - Edited requirements.txt
+  - Bumped the version number
