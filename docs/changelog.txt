@@ -1,3 +1,10 @@
+Version 1.2.3
+ - Edited the port scanner, it will tell you what ports are open now instead of just going through them all
+ - Port scanner tells you what ports are what (tcp, https, etc..)
+ - Port scanner is now able to scan URL's as well by resolving to their host IP
+ - Edited settings to reflect the port descriptions
+ - Bumped version number
+
 Version 1.1.2
   - Added a hash cracking system, check out the README for further information
   - Created a new flag for downloading random wordlists
