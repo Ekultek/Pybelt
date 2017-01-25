@@ -16,11 +16,11 @@ SQL Injection scanning made easy, just provide a URL and watch it work
 Dork checker, have some Dorks you're not sure of? Go ahead and run the Dork check with the Dork as an argument, it will pull 100 URLs and give you success rate for the Dork
 ![dork](https://s29.postimg.org/m58dujwav/dork_scan.png)
 
-Simple port scanning, provide a host to scan and find the open ports to forward too
-![port](https://s29.postimg.org/qgwzjk37r/port_scan.png)
-
 Hash cracking made simple, provide the hash type at the end ":md5, :sha256, etc" for a specific hash, or ":all" for all algorithms available on your machine
 ![hash](https://s29.postimg.org/802ksqn9j/hash_cracking.png)
+
+Simple port scanning, provide a host to scan and find the open ports to forward too
+![port](https://s29.postimg.org/qgwzjk37r/port_scan.png)
 
 ##Usage
 
