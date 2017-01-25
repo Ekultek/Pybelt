@@ -10,3 +10,4 @@ from settings import SYNTAX_REGEX
 from settings import IP_ADDRESS_REGEX
 from settings import create_wordlist
 from settings import WORDLIST_LINKS
+from settings import URL_REGEX

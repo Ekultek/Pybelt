@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version
-VERSION = "1.1.2"
+VERSION = "1.2.3"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -55,16 +55,59 @@ RANDOM_COMMON_COLUMN = random.choice(open("{}/lib/text_files/common_columns.txt"
 # Search query regex to make sure the URLS have a GET parameter
 QUERY_REGEX = re.compile(r"(.*)[?|#](.*){1}\=(.*)")
 
+# Regex to match errors thrown by the database
 SQLI_ERROR_REGEX = (
-    re.compile(r"SQL syntax.*MySQL"),  # You have an error in your SQL syntax
-    re.compile("Warning.*mysql_.*"),  # Warning MySQL syntax contains an error at line ..
-    re.compile(r"valid MySQL result"),  # Your search has produced a invalid MySQL result
-    re.compile(r"MySqlClient\."),  # You have an error located at .. in your MySQL client server
+    # PostgreSQL
+    re.compile(r"PostgreSQL.*ERROR"), re.compile(r"Warning.*\Wpg_.*"),
+    re.compile(r"valid PostgreSQL result"), re.compile(r"Npgsql\."),
+
+    # MS SQL Server
+    re.compile(r"Driver.* SQL[\-_ ]*Server"), re.compile(r"OLE DB.* SQL Server"),
+    re.compile(r"(\W|\A)SQL Server.*Driver"), re.compile(r"Warning.*mssql_.*"),
+    re.compile(r"(\W|\A)SQL Server.*[0-9a-fA-F]{8}"), re.compile(r"(?s)Exception.*\WSystem\.Data\.SqlClient\."),
+    re.compile(r"(?s)Exception.*\WRoadhouse\.Cms\."),
+
+    # MS Access
+    re.compile(r"Microsoft Access Driver"), re.compile(r"JET Database Engine"),
+    re.compile(r"Access Database Engine"),
+
+    # Oracle
+    re.compile(r"\bORA-[0-9][0-9][0-9][0-9]"), re.compile(r"Oracle error"),
+    re.compile(r"Oracle.*Driver"), re.compile(r"Warning.*\Woci_.*"),
+    re.compile(r"Warning.*\Wora_.*"),
+
+    # IBM DB2
+    re.compile(r"CLI Driver.*DB2"), re.compile(r"DB2 SQL error"),
+    re.compile(r"\bdb2_\w+\("),
+
+    # SQLite
+    re.compile(r"SQLite/JDBCDriver"), re.compile(r"SQLite.Exception"),
+    re.compile(r"System.Data.SQLite.SQLiteException"), re.compile(r"Warning.*sqlite_.*"),
+    re.compile(r"Warning.*SQLite3::"), re.compile(r"\[SQLITE_ERROR\]"),
+
+    # Sysbase
+    re.compile(r"(?i)Warning.*sybase.*"), re.compile(r"Sybase message"),
+    re.compile(r"Sybase.*Server message.*"),
+
+    # MySQL
+    re.compile(r"SQL syntax.*MySQL"), re.compile("Warning.*mysql_.*"),
+    re.compile(r"valid MySQL result"), re.compile(r"MySqlClient\."),
 )
 
+# Regex to match syntax
 SYNTAX_REGEX = re.compile(r"\W+$")
 
-IP_ADDRESS_REGEX = re.compile("^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
+# Regex to match an IP address
+IP_ADDRESS_REGEX = re.compile(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
+
+# Regex to match any given URL
+URL_REGEX = re.compile(
+    r'(?i)\b((?:[a-z][\w-]+:(?:|[a-z0-9%])|'
+    r'www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4})'
+    r'(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+'
+    r'(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'
+    r'"]))'
+)
 
 # Sexy ass banner
 BANNER = """\033[94m
@@ -95,10 +138,22 @@ GOOGLE_TEMP_BLOCK_ERROR_MESSAGE += "\tD) Curse my name and this program"
 
 # List of reserved port numbers, these are the ports that you want to check
 RESERVED_PORTS = {
-    1, 5, 7, 18, 20, 21, 22, 23, 25, 29, 37, 42, 43, 49,
-    53, 69, 70, 79, 80, 103, 108, 109, 110, 115, 118, 119, 137, 139,
-    143, 150, 156, 161, 179, 190, 194, 197, 389, 396, 443, 444, 445, 458,
-    546, 547, 563, 569, 1080
+    1: "TCP", 5: "RDP (TCP/UDP)", 7: "Echo (TCP/UDP)", 18: "Message Protocol (MSP)",
+    20: "FTP (TCP/UDP/SCTP)", 21: "FTP (TCP/UDP/SCTP)", 22: "SSH (TCP/UDP/SCTP)",
+    23: "Telnet (TCP/UDP)", 25: "SMTP (TCP/UDP)", 29: "MSG-ICP (TCP/UDP)",
+    37: "Time (TCP/UDP)", 42: "Name/Nameserver (TCP/UDP)", 43: "WHOIS (TCP/UDP)",
+    49: "TACACS (TCP/UDP)", 53: "DNS (TCP/UDP)", 69: "TFT (TCP/UDP)",
+    70: "Gopher (TCP/UDP)", 79: "Finger (TCP/UDP)", 80: "HTTP (TCP/UDP/SCTP)",
+    103: "GPPTN (TCP/UDP)", 108: "SNAGAS (TCP/UDP)", 109: "POP2 (TCP/UDP)",
+    110: "POP3 (TCP/UDP)", 115: "SFTP (TCP/UDP)", 118: "SQL Services (TCP/UDP)",
+    119: "NNTP (TCP/UDP)", 137: "NETBIOS-NS (TCP/UDP)", 139: "NETBIOS-SSN (TCP/UDP)",
+    143: "IMAP (TCP/UDP)", 150: "SQL-NET (TCP/UDP)", 156: "SQL Service (TCP/UDP)",
+    161: "SNMP (TCP/UDP)", 179: "BGP (TCP/UDP/SCTP)", 190: "GACP (TCP/UDP)",
+    194: "IRC (TCP/UDP)", 197: "DLS (TCP/UDP)", 389: "LDAP (TCP/UDP)",
+    396: "Netware-IP (TCP/UDP)", 443: "HTTPS (TCP/UDP/SCTP)", 444: "SNPP (TCP/UDP)",
+    445: "Microsoft-DS (TCP/UDP)", 458: "Apple Quick Time (TCP/UDP)", 546: "DHCPv6 (TCP/UDP)",
+    547: "DHCPv6 (TCP/UDP)", 563: "NNTPS (TCP/UDP)", 569: "MS-Rome (TCP/UDP)",
+    1080: "Socks (TCP/UDP)"
 }
 
 # Links to some wordlists I have laying around
