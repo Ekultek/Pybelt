@@ -2,10 +2,12 @@ import argparse
 import sys
 import re
 import random
+import socket
 from urllib2 import HTTPError
 from lib.core import BANNER
 from lib.core.errors import GoogleBlockException
 from lib.core.settings import LOGGER
+from lib.core.settings import URL_REGEX
 from lib.core.settings import LEGAL_DISC
 from lib.core.settings import QUERY_REGEX
 from lib.core.settings import VERSION_STRING
@@ -35,7 +37,7 @@ if __name__ == '__main__':
     opts.add_argument('--version', action="store_true", dest="version",
                       help="Show the version number and exit")
     opts.add_argument('--rand-wordlist', action="store_true", dest="random_wordlist",
-                      help="Use a random wordlist from a Gist link")
+                      help=argparse.SUPPRESS)
     args = opts.parse_args()
 
     print(BANNER + "\033[91m{}\033[0m".format(LEGAL_DISC) + "\n") if args.legal is False else \
@@ -64,7 +66,6 @@ if __name__ == '__main__':
                 LOGGER.info(DorkScanner(args.dorkcheck).check_urls_for_queries())
             except HTTPError:
                 LOGGER.fatal(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
-                exit(1)
 
         if args.hash is not None:
             try:
@@ -72,18 +73,37 @@ if __name__ == '__main__':
                 if items[1] == "all":
                     LOGGER.info("Starting hash cracking without knowledge of algorithm...")
                     HashCracker(items[0]).try_all_algorithms()
-                    exit(0)
                 else:
                     LOGGER.info("Starting hash cracking using %s as algorithm type" % items[1])
                     HashCracker(items[0], type=items[1]).try_certain_algorithm()
-                    exit(0)
             except IndexError:
-                error_message = "You must specify a hash type in order for this to word"
-                exit(1)
+                error_message = "You must specify a hash type in order for this to work"
+                LOGGER.fatal(error_message)
 
-        if args.portscan is not None and re.search(IP_ADDRESS_REGEX, sys.argv[2]):
-            LOGGER.info("Starting port scan on {}".format(args.portscan))
-            LOGGER.info(PortScanner(args.portscan).connect_to_host())
+        if args.portscan is not None:
+            if re.search(IP_ADDRESS_REGEX, sys.argv[2]) is not None:
+                LOGGER.info("Starting port scan on IP: {}".format(args.portscan))
+                LOGGER.info(PortScanner(args.portscan).connect_to_host())
+            elif re.search(URL_REGEX, sys.argv[2]) is not None and re.search(QUERY_REGEX, sys.argv[2]) is None:
+                try:
+                    LOGGER.info("Fetching resolve IP...")
+                    ip_address = socket.gethostbyname(args.portscan)
+                    LOGGER.info("Done! IP: {}".format(ip_address))
+                    LOGGER.info("Starting scan on URL: {} IP: {}".format(args.portscan, ip_address))
+                    PortScanner(ip_address).connect_to_host()
+                except socket.gaierror:
+                    error_message = "Unable to resolve IP address from {}.".format(args.portscan)
+                    error_message += " You can manually get the IP address and try again,"
+                    error_message += " dropping the query parameter in the URL (IE php?id=),"
+                    error_message += " or dropping the http or https"
+                    error_message += " and adding www in place of it. IE www.google.com"
+                    error_message += " may fix this issue."
+                    LOGGER.fatal(error_message)
+            else:
+                error_message = "You need to provide a host to scan,"
+                error_message += " this can be given in the form of a URL "
+                error_message += "or a IP address."
+                LOGGER.fatal(error_message)
 
     except KeyboardInterrupt:
         LOGGER.error("User aborted.")
