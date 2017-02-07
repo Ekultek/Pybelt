@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version
-VERSION = "1.2.3"
+VERSION = "1.3.4"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -47,7 +47,9 @@ LONG_LEGAL_DISCLAIMER = open("lib/text_files/legal.txt").read()
 SAYING = random.choice(["The Hackers ToolBelt..",
                         "The Hackers Blackbelt..",
                         "The Hackers Multi-Tool..",
-                        "The Hackers Gerber.."])
+                        "The Hackers Gerber..",
+                        "The Hackers Best Friend..",
+                        "Hacking Made Easy.."])
 
 # Random common column names
 RANDOM_COMMON_COLUMN = random.choice(open("{}/lib/text_files/common_columns.txt".format(PATH)).readlines())
@@ -108,6 +110,17 @@ URL_REGEX = re.compile(
     r'(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'
     r'"]))'
 )
+
+# Regex to match hash types, these are the only supported hashing types right now
+HASH_TYPE_REGEX = {
+    "md5": re.compile(r"^[a-f0-9]{32}(:.+)?$", re.IGNORECASE),
+    "sha256": re.compile(r"^[a-f0-9]{64}(:.+)?$", re.IGNORECASE),
+    "whirlpool": re.compile(r"^[a-f0-9]{128}(:.+)?$", re.IGNORECASE),
+    "sha224": re.compile(r"^[a-f0-9]{56}$", re.IGNORECASE),
+    "sha1": re.compile(r"^[a-f0-9]{40}(:.+)?$", re.IGNORECASE),
+    "sha384": re.compile(r"^[a-f0-9]{96}$", re.IGNORECASE),
+    "sha512": re.compile(r"^[a-f0-9]{128}(:.+)?$", re.IGNORECASE),
+}
 
 # Sexy ass banner
 BANNER = """\033[94m
