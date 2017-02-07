@@ -45,7 +45,5 @@ This will install all of the programs needed libraries and should be able to be 
 
 `python pybelt.py -v 098f6bcd4621d373cade4e832627b4f6` Will try to verify the hash type
 
-##Misc info you probably don't care about
- 
 ###License
 This program is licensed under the MIT license, you can the license in the DOCS folder
