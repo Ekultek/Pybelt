@@ -6,6 +6,7 @@ Pybelt is an open source hackers tool belt complete with:
  - SQL injection scanner
  - Dork checker
  - Hash cracker
+ - Hash type verification tool
  
 It is capable of cracking hashes without prior knowledge of the algorithm, scanning ports on a given host, searching for SQLi vulnerabilities in a given URL, and verifying that your Google dorks work like they should.
 
@@ -19,8 +20,7 @@ Dork checker, have some Dorks you're not sure of? Go ahead and run the Dork chec
 Hash cracking made simple, provide the hash type at the end ":md5, :sha256, etc" for a specific hash, or ":all" for all algorithms available on your machine
 ![hash](https://s29.postimg.org/802ksqn9j/hash_cracking.png)
 
-Simple port scanning, provide a host to scan and find the open ports to forward too
-![port](https://s29.postimg.org/qgwzjk37r/port_scan.png)
+And many more!
 
 ##Usage
 
@@ -42,6 +42,8 @@ This will install all of the programs needed libraries and should be able to be 
 `python pybelt.py -d idea?id=55` Will run a Dork check on the given Google Dork
 
 `python pybelt.py -c 9a8b1b7eee229046fc2701b228fc2aff:all` Will attempt to crack the hash using all algorithms available on the computer
+
+`python pybelt.py -v 098f6bcd4621d373cade4e832627b4f6` Will try to verify the hash type
 
 ##Misc info you probably don't care about
  
