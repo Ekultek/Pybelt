@@ -20,6 +20,8 @@ from lib.core.sql_scan import SQLiScanner
 from lib.core.dork_check import DorkScanner
 from lib.core.port_scan import PortScanner
 from lib.core.hash_cracking import HashCracker
+from lib.core.hash_checker import HashChecker
+
 
 if __name__ == '__main__':
     opts = argparse.ArgumentParser()
@@ -31,6 +33,8 @@ if __name__ == '__main__':
                       help="Provide a host to scan for open ports")
     opts.add_argument('-s', '--sqli-scanner', metavar="URL", dest="sqliscan",
                       help="Provide a URL to scan for SQL injection flaws")
+    opts.add_argument("-v", '--verify-hash', metavar="HASH", dest="hashcheck",
+                      help="Verify a given hash type. (MD5, WHIRLPOOL, SHA256, etc..)")
 
     opts.add_argument('-l', '--legal', action="store_true", dest="legal",
                       help="Display the legal information")
@@ -53,9 +57,13 @@ if __name__ == '__main__':
             create_wordlist(random.choice(WORDLIST_LINKS))
             LOGGER.info("Wordlist created, resuming process..")
 
+        if args.hashcheck is not None:
+            LOGGER.info("Analyzing hash: '{}'".format(args.hashcheck))
+            HashChecker(args.hashcheck).obtain_hash_type()
+
         if args.sqliscan is not None:
             if QUERY_REGEX.match(args.sqliscan):
-                LOGGER.info("Starting SQLi scan on {}..".format(args.sqliscan))
+                LOGGER.info("Starting SQLi scan on '{}'..".format(args.sqliscan))
                 LOGGER.info(SQLiScanner(args.sqliscan).sqli_search())
             else:
                 LOGGER.error("URL does not contain a query (GET) parameter. Example: http://example.com/php?id=2")
