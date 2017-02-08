@@ -1,3 +1,8 @@
+Version 1.3.5
+ - Updated hash checker to provide all possible hashes
+ - Updated to show most and least likely hashes
+ - Bumped version number
+
 Version 1.3.4
  - Created a hash checking system only support basic hash types as of now (md5, sha, etc..)
  - Created regex's for verifying hash types (still working on it)
