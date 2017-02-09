@@ -26,11 +26,13 @@ class HashChecker(object):
 
     @staticmethod
     def enumerate_hash_types(items):
-        LOGGER.info("{} possible hash types found".format(len(items)))
+        LOGGER.info("{} possible hash types found..".format(len(items)))
         count = 0
         for item in items:
             count += 1
             if count <= 3:
                 print("\033[92m[*] Most likely possible hash type: {}\033[0m".format(item))
+                if count == 3:
+                    print("")
             else:
                 print("\033[33m[*] Least likely possible hash type: {}\033[0m".format(item))
