@@ -4,8 +4,10 @@ import re
 import random
 import socket
 from urllib2 import HTTPError
-from lib.core import BANNER
+
+# Settings information
 from lib.core.errors import GoogleBlockException
+from lib.core.settings import BANNER
 from lib.core.settings import LOGGER
 from lib.core.settings import URL_REGEX
 from lib.core.settings import LEGAL_DISC
@@ -16,6 +18,8 @@ from lib.core.settings import WORDLIST_LINKS
 from lib.core.settings import IP_ADDRESS_REGEX
 from lib.core.settings import LONG_LEGAL_DISCLAIMER
 from lib.core.settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
+
+# Class libraries that are used for the program
 from lib.core.sql_scan import SQLiScanner
 from lib.core.dork_check import DorkScanner
 from lib.core.port_scan import PortScanner
@@ -41,54 +45,64 @@ if __name__ == '__main__':
     opts.add_argument('--version', action="store_true", dest="version",
                       help="Show the version number and exit")
     opts.add_argument('--rand-wordlist', action="store_true", dest="random_wordlist",
-                      help=argparse.SUPPRESS)
+                      help="Create a random wordlist to use for dictionary attacks")
     args = opts.parse_args()
 
     print(BANNER + "\033[91m{}\033[0m".format(LEGAL_DISC) + "\n") if args.legal is False else \
         BANNER + "\033[91m{}\033[0m".format(LONG_LEGAL_DISCLAIMER + "\n")
 
     try:
-        if args.version is True:
+        if args.version is True:  # Show the version number and exit
             LOGGER.info(VERSION_STRING)
             sys.exit(0)
 
-        if args.random_wordlist is True:
+        if args.random_wordlist is True: # Create a random wordlist
             LOGGER.info("Creating a random wordlist..")
             create_wordlist(random.choice(WORDLIST_LINKS))
             LOGGER.info("Wordlist created, resuming process..")
 
-        if args.hashcheck is not None:
+        if args.hashcheck is not None:  # Check what hash type you have
             LOGGER.info("Analyzing hash: '{}'".format(args.hashcheck))
             HashChecker(args.hashcheck).obtain_hash_type()
 
-        if args.sqliscan is not None:
-            if QUERY_REGEX.match(args.sqliscan):
-                LOGGER.info("Starting SQLi scan on '{}'..".format(args.sqliscan))
-                LOGGER.info(SQLiScanner(args.sqliscan).sqli_search())
-            else:
-                LOGGER.error("URL does not contain a query (GET) parameter. Example: http://example.com/php?id=2")
+        if args.sqliscan is not None:  # SQLi scanning
+            try:
+                if QUERY_REGEX.match(args.sqliscan):
+                    LOGGER.info("Starting SQLi scan on '{}'..".format(args.sqliscan))
+                    LOGGER.info(SQLiScanner(args.sqliscan).sqli_search())
+                else:
+                    LOGGER.error("URL does not contain a query (GET) parameter. Example: http://example.com/php?id=2")
+            except HTTPError as e:
+                error_message = "URL: '{}' threw an exception: '{}' ".format(args.sqliscan, e)
+                error_message += "and Pybelt is unable to resolve the URL, "
+                error_message += "this could mean that the URL is not allowing connections "
+                error_message += "or that the URL is bad. Attempt to connect "
+                error_message += "to the URL manually, if a connection occurs "
+                error_message += "make an issue."
+                LOGGER.fatal(error_message)
 
-        if args.dorkcheck is not None:
+        if args.dorkcheck is not None:  # Dork checker, check if your dork isn't shit
             LOGGER.info("Starting dork scan, using query: '{}'..".format(args.dorkcheck))
             try:
                 LOGGER.info(DorkScanner(args.dorkcheck).check_urls_for_queries())
             except HTTPError:
                 LOGGER.fatal(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
 
-        if args.hash is not None:
+        if args.hash is not None:  # Try and crack a hash
             try:
                 items = list(''.join(args.hash).split(":"))
                 if items[1] == "all":
                     LOGGER.info("Starting hash cracking without knowledge of algorithm...")
                     HashCracker(items[0]).try_all_algorithms()
                 else:
-                    LOGGER.info("Starting hash cracking using %s as algorithm type" % items[1])
+                    LOGGER.info("Starting hash cracking using %s as algorithm type.." % items[1])
                     HashCracker(items[0], type=items[1]).try_certain_algorithm()
             except IndexError:
-                error_message = "You must specify a hash type in order for this to work"
+                error_message = "You must specify a hash type in order for this to work. "
+                error_message += "Example: 'python pybelt.py -c 098f6bcd4621d373cade4e832627b4f6:md5'"
                 LOGGER.fatal(error_message)
 
-        if args.portscan is not None:
+        if args.portscan is not None:  # Scan a given host for open ports
             if re.search(IP_ADDRESS_REGEX, sys.argv[2]) is not None:
                 LOGGER.info("Starting port scan on IP: {}".format(args.portscan))
                 LOGGER.info(PortScanner(args.portscan).connect_to_host())
@@ -113,5 +127,5 @@ if __name__ == '__main__':
                 error_message += "or a IP address."
                 LOGGER.fatal(error_message)
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # Why you abort me?! :c
         LOGGER.error("User aborted.")
