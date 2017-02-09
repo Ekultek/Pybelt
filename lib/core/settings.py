@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version
-VERSION = "1.3.5"
+VERSION = "1.3.6"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -39,7 +39,7 @@ CLONE_LINK = "https://github.com/ekultek/pybelt.git"
 # Basic legal disclaimer
 LEGAL_DISC = "[!] legal disclaimer: This program is intended for learning purposes, any malicious intent is on you, " \
              "it is the end users responsibility to obey all laws, regulations, and rules of your respective country " \
-             "or place of origin. For further information about this please see the legal information file under docs " \
+             "or place of origin. For further information about this please see the legal information file under lib/text_files " \
              "or run the --legal flag"
 LONG_LEGAL_DISCLAIMER = open("lib/text_files/legal.txt").read()
 
