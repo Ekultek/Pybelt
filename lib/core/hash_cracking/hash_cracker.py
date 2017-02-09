@@ -41,6 +41,7 @@ class HashCracker(object):
             data.update(word.strip())
             self.results[data.hexdigest()] = [word.strip(), self.type]
         LOGGER.info("Created %i hashes to verify.." % len(self.results.keys()))
+        LOGGER.info("Attempting to crack hash (%s).." % self.hash)
         if self.verify_hashes() is False:
             error_message = "Unable to verify %s against %i different hashes." % (self.hash, len(self.results))
             error_message += " You used algorithm: %s you can attempt all algorithms " % str(self.type).upper()
