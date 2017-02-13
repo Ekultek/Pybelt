@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version
-VERSION = "1.3.6"
+VERSION = "1.4.7"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -50,6 +50,9 @@ SAYING = random.choice(["The Hackers ToolBelt..",
                         "The Hackers Gerber..",
                         "The Hackers Best Friend..",
                         "Hacking Made Easy.."])
+
+# URL to pull proxies from
+PROXY_URL = "http://proxy.tekbreak.com/100/json"
 
 # Random common column names
 RANDOM_COMMON_COLUMN = random.choice(open("{}/lib/text_files/common_columns.txt".format(PATH)).readlines())
