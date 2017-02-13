@@ -25,6 +25,7 @@ from lib.core.dork_check import DorkScanner
 from lib.core.port_scan import PortScanner
 from lib.core.hash_cracking import HashCracker
 from lib.core.hash_checker import HashChecker
+from lib.core.proxy_finder import attempt_to_connect_to_proxies
 
 
 if __name__ == '__main__':
@@ -39,6 +40,8 @@ if __name__ == '__main__':
                       help="Provide a URL to scan for SQL injection flaws")
     opts.add_argument("-v", '--verify-hash', metavar="HASH", dest="hashcheck",
                       help="Verify a given hash type. (MD5, WHIRLPOOL, SHA256, etc..)")
+    opts.add_argument("-f", "--find-proxies", action="store_true", dest="proxysearch",
+                      help="Attempt to find some proxies automatically")
 
     opts.add_argument('-l', '--legal', action="store_true", dest="legal",
                       help="Display the legal information")
@@ -56,10 +59,14 @@ if __name__ == '__main__':
             LOGGER.info(VERSION_STRING)
             sys.exit(0)
 
-        if args.random_wordlist is True: # Create a random wordlist
+        if args.random_wordlist is True:  # Create a random wordlist
             LOGGER.info("Creating a random wordlist..")
             create_wordlist(random.choice(WORDLIST_LINKS))
             LOGGER.info("Wordlist created, resuming process..")
+
+        if args.proxysearch is True:  # Find some proxies
+            LOGGER.info("Starting proxy search..")
+            attempt_to_connect_to_proxies()
 
         if args.hashcheck is not None:  # Check what hash type you have
             LOGGER.info("Analyzing hash: '{}'".format(args.hashcheck))
