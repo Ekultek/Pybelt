@@ -1,4 +1,3 @@
-from lib.core.settings import prompt
 from lib.core.settings import LOGGER
 from lib.core.settings import HASH_TYPE_REGEX
 
@@ -25,14 +24,12 @@ class HashChecker(object):
             return
 
     @staticmethod
-    def enumerate_hash_types(items):
+    def enumerate_hash_types(items, max_likeliest=3):
         LOGGER.info("{} possible hash types found..".format(len(items)))
-        count = 0
-        for item in items:
-            count += 1
-            if count <= 3:
+        for count, item in enumerate(items, start=1):
+            if count <= max_likeliest:
                 print("\033[92m[*] Most likely possible hash type: {}\033[0m".format(item))
-                if count == 3:
+                if count == max_likeliest:
                     print("")
             else:
                 print("\033[33m[*] Least likely possible hash type: {}\033[0m".format(item))
