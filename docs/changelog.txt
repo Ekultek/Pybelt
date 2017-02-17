@@ -1,3 +1,15 @@
+Version 1.0.6.9
+  - Merged pull request to increase the speed of the port scanner
+    (it's fucking magical now)
+  - Moved hash_checker to be inside of hash_cracking
+  - Created a XSS vulnerability scanner, sits inside of sqli scan folder
+  - Created a function to create directories if they do not exist
+  - Proxies will now be saved to a file instead of just displayed
+    on the screen, you'll have a list of good proxies to use
+  - Removed __init__ from text files
+  - Bumped version number because that's how you do it when you're as
+    beastly as I am
+
 Version 1.0.5.8
   - Patched dork checker
   - Bumped version numnber
