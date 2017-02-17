@@ -8,6 +8,7 @@ Pybelt is an open source hackers tool belt complete with:
  - Hash cracker
  - Hash type verification tool
  - Proxy finding tool
+ - XSS scanner
  
 It is capable of cracking hashes without prior knowledge of the algorithm, scanning ports on a given host, searching for SQLi vulnerabilities in a given URL, and verifying that your Google dorks work like they should.
 
