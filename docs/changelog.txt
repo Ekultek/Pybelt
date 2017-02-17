@@ -1,3 +1,16 @@
+Version 1.0.7.10
+  - Created proxy flag
+  - Created random user agent flag
+  - Configured XSS scan to be able to scan through a proxy and
+    use a random user agent
+  - Working on SQLi scan for proxy and user agent (not done)
+  - Edited some comments in SQLi scan
+  - Added a list of random user agents in lib/text_files
+  - Created a constant for random user agents
+  - Minor port scanner edit, just throughs an error as log instead
+    of print
+  - Bumped version number
+
 Version 1.0.6.9
   - Merged pull request to increase the speed of the port scanner
     (it's fucking magical now)
