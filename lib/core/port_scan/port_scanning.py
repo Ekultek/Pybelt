@@ -22,7 +22,7 @@ class PortScanner(object):
             t2 = threading.Thread(target=(rst.run_scan))
             t2.start()
         except Exception, e:
-            print e
+            LOGGER.error(e)
 
 
 # Thread Class
