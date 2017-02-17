@@ -2,9 +2,11 @@ import requests
 from lib.core.settings import LOGGER
 
 
-def get_context(url):
+def get_context(url, proxy=None, header=None):
     """ Return the HTML of the site """
-    return requests.get(url).text
+    proxies = {"http": proxy}  # Only supports HTTP for now
+    agents = {"user-agent": header}
+    return requests.get(url, headers=agents, proxies=proxies).text
 
 
 def create_payload(url, script="alert('test');"):
@@ -52,8 +54,8 @@ def verify_xss_vulnerable(context, scripted_url):
             return False
 
 
-def main(url):
+def main(url, proxy=None, headers=None):
     """ Main """
-    html_data = get_context(create_payload(url))
+    html_data = get_context(create_payload(url), proxy=proxy, header=headers)
     scripted_url = create_payload(url)
     return verify_xss_vulnerable(html_data, scripted_url)
