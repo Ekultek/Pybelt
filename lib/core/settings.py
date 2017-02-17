@@ -54,8 +54,9 @@ SAYING = random.choice(["The Hackers ToolBelt..",
 # URL to pull proxies from
 PROXY_URL = "http://proxy.tekbreak.com/100/json"
 
-# Random common column names
+# Random common column names, and random user agents
 RANDOM_COMMON_COLUMN = random.choice(open("{}/lib/text_files/common_columns.txt".format(PATH)).readlines())
+RANDOM_USER_AGENT = random.choice(open("{}/lib/text_files/agents.txt".format(PATH)).readlines()).strip()
 
 # Search query regex to make sure the URLS have a GET parameter
 QUERY_REGEX = re.compile(r"(.*)[?|#](.*){1}\=(.*)")
