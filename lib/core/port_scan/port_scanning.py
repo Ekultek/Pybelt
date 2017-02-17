@@ -1,7 +1,9 @@
 import socket
 import time
+import Queue
 from lib.core.settings import LOGGER
 from lib.core.settings import RESERVED_PORTS
+import threading
 
 
 class PortScanner(object):
@@ -13,17 +15,51 @@ class PortScanner(object):
         self.ports = RESERVED_PORTS
 
     def connect_to_host(self):
-        start_time = time.time()
+
         try:
-            for port in RESERVED_PORTS.keys():
+            # Calling the thread class
+            rst = run_scn_thread(self.host)
+            t2 = threading.Thread(target=(rst.run_scan))
+            t2.start()
+        except Exception, e:
+            print e
+
+
+# Thread Class
+class run_scn_thread(PortScanner):
+
+    def run_scan(self):
+        start_time = time.time()
+
+        def scn(port):
+            try:
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 res = sock.connect_ex((self.host, port))
+                sock.settimeout(3)
                 if res == 0:
                     LOGGER.info("[*] Open: {}  {}".format(port, RESERVED_PORTS[port]))
                     self.connection_made.append(port)
                 sock.close()
-        except Exception, e:
-            print e
+            except Exception, e:
+                print e
+
+        q = Queue.Queue()
+
+        def threader():
+            worker = q.get()
+            scn(worker)
+            q.task_done()
+
+        for x in range(200):
+            t = threading.Thread(target=threader)
+            t.daemon = True
+            t.start()
+
+        for worker in RESERVED_PORTS.keys():
+            q.put(worker)
+            pass
+
+        q.join()
 
         stop_time = time.time()
         LOGGER.info("Completed in {} seconds".format(str(stop_time - start_time)))
