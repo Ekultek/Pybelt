@@ -1,9 +1,9 @@
 import socket
 import time
 import Queue
+import threading
 from lib.core.settings import LOGGER
 from lib.core.settings import RESERVED_PORTS
-import threading
 
 
 class PortScanner(object):
