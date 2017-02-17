@@ -18,7 +18,7 @@ class PortScanner(object):
 
         try:
             # Calling the thread class
-            rst = run_scn_thread(self.host)
+            rst = RunScanThread(self.host)
             t2 = threading.Thread(target=(rst.run_scan))
             t2.start()
         except Exception, e:
@@ -26,7 +26,7 @@ class PortScanner(object):
 
 
 # Thread Class
-class run_scn_thread(PortScanner):
+class RunScanThread(PortScanner):
 
     def run_scan(self):
         start_time = time.time()
