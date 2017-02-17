@@ -1,6 +1,7 @@
 from lib.core import settings
 from google import search
 from lib.core.settings import LOGGER
+from lib.core.settings import create_dir
 
 
 class DorkScanner(object):
@@ -28,7 +29,8 @@ class DorkScanner(object):
             http://google.com <- False
             http://example.com/php?id=2 <- True """
         filename = settings.create_random_filename()
-        LOGGER.info("File being saved to: {}".format(filename))
+        LOGGER.info("File being saved to: {}.txt".format(filename))
+        create_dir(settings.DORK_SCAN_RESULTS_PATH)
         with open("{}\\{}.txt".format(settings.DORK_SCAN_RESULTS_PATH, filename), "a+") as results:
             for url in self.connect_to_search_engine():
                 match = settings.QUERY_REGEX.match(url)  # Match by regex for anything that has a ?<PARAM>= in it
