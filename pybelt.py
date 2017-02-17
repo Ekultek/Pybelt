@@ -1,32 +1,29 @@
 import argparse
-import sys
-import re
 import random
+import re
 import socket
+import sys
 from urllib2 import HTTPError
 
-# Settings information
-from lib.core.errors import GoogleBlockException
-from lib.core.settings import BANNER
-from lib.core.settings import LOGGER
-from lib.core.settings import URL_REGEX
-from lib.core.settings import LEGAL_DISC
-from lib.core.settings import QUERY_REGEX
-from lib.core.settings import VERSION_STRING
-from lib.core.settings import create_wordlist
-from lib.core.settings import WORDLIST_LINKS
-from lib.core.settings import IP_ADDRESS_REGEX
-from lib.core.settings import LONG_LEGAL_DISCLAIMER
-from lib.core.settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
-
-# Class libraries that are used for the program
-from lib.core.sql_scan import SQLiScanner
 from lib.core.dork_check import DorkScanner
-from lib.core.port_scan import PortScanner
+from lib.core.errors import GoogleBlockException
 from lib.core.hash_cracking import HashCracker
-from lib.core.hash_checker import HashChecker
+from lib.core.hash_cracking.hash_checker import HashChecker
+from lib.core.port_scan import PortScanner
 from lib.core.proxy_finder import attempt_to_connect_to_proxies
-
+from lib.core.settings import BANNER
+from lib.core.settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
+from lib.core.settings import IP_ADDRESS_REGEX
+from lib.core.settings import LEGAL_DISC
+from lib.core.settings import LOGGER
+from lib.core.settings import LONG_LEGAL_DISCLAIMER
+from lib.core.settings import QUERY_REGEX
+from lib.core.settings import URL_REGEX
+from lib.core.settings import VERSION_STRING
+from lib.core.settings import WORDLIST_LINKS
+from lib.core.settings import create_wordlist
+from lib.core.sql_scan import SQLiScanner
+from lib.core.sql_scan.xss_scan import xss
 
 if __name__ == '__main__':
     opts = argparse.ArgumentParser()
@@ -42,6 +39,8 @@ if __name__ == '__main__':
                       help="Verify a given hash type. (MD5, WHIRLPOOL, SHA256, etc..)")
     opts.add_argument("-f", "--find-proxies", action="store_true", dest="proxysearch",
                       help="Attempt to find some proxies automatically")
+    opts.add_argument('-x', '--xss', metavar="URL", dest="xssScan",
+                      help="Check if a URL is vulnerable to XSS")
 
     opts.add_argument('-l', '--legal', action="store_true", dest="legal",
                       help="Display the legal information")
@@ -132,6 +131,20 @@ if __name__ == '__main__':
                 error_message = "You need to provide a host to scan,"
                 error_message += " this can be given in the form of a URL "
                 error_message += "or a IP address."
+                LOGGER.fatal(error_message)
+
+        if args.xssScan is not None:  # Scan a URL for XSS vulnerabilities
+            if QUERY_REGEX.match(args.xssScan):
+                LOGGER.info("Searching: {} for XSS vulnerabilities..".format(args.xssScan))
+                if not xss.main(args.xssScan):
+                    LOGGER.error("{} does not appear to be vulnerable to XSS".format(args.xssScan))
+                else:
+                    LOGGER.info("{} seems to be vulnerable to XSS.".format(args.xssScan))
+            else:
+                error_message = "The URL you provided does not contain a query "
+                error_message += "(GET) parameter. In order for this scan you run "
+                error_message += "successfully you will need to provide a URL with "
+                error_message += "A query (GET) parameter example: http://127.0.0.1/php?id=2"
                 LOGGER.fatal(error_message)
 
     except KeyboardInterrupt:  # Why you abort me?! :c
