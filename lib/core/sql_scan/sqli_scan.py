@@ -12,20 +12,31 @@ class SQLiScanner(object):
 
     vulnerable = False
 
-    def __init__(self, url):
+    def __init__(self, url, proxy=None, agent=None):
         self.url = url
+        self.proxy = proxy  # Only HTTP proxy for now
+        self.agent = agent
         self.int = random.randint(1, 13)
         self.error_syntax = ["'", "--", ';', '"', "/*", "'/*", "'--", '"--', "';", '";', '`',
-                             " AND %i=%i" % (self.int, self.int),
-                             " OR %i=%i" % (self.int, self.int),
+                             " AND {}={}".format(self.int, self.int),
+                             " OR {}={}".format(self.int, self.int),
                              " union false {}".format(RANDOM_COMMON_COLUMN.strip()),
                              " UNION {}".format(RANDOM_COMMON_COLUMN.strip())]
 
     @staticmethod
     def obtain_inject_query(url):
+        """ Obtain the injection query of the URL """
         return urlparse(url).query
 
     def add_injection_syntax_to_url(self):
+        """ Add injection syntax to the URL
+        >>> SQLiScanner("http://google.com/#?id=2").add_injection_syntax_to_url()
+        http://google.com/#?id=2'
+        ...
+        http://google.com/#?id=2 AND 1=1
+        ...
+        http://google.com/#?id=2 union false table
+        """
         results = set()
         for syntax in self.error_syntax:
             results.add(self.url + syntax)

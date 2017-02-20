@@ -1,31 +1,33 @@
 import argparse
-import sys
-import re
 import random
+import re
 import socket
+import sys
 from urllib2 import HTTPError
 
-# Settings information
-from lib.core.errors import GoogleBlockException
-from lib.core.settings import BANNER
-from lib.core.settings import LOGGER
-from lib.core.settings import URL_REGEX
-from lib.core.settings import LEGAL_DISC
-from lib.core.settings import QUERY_REGEX
-from lib.core.settings import VERSION_STRING
-from lib.core.settings import create_wordlist
-from lib.core.settings import WORDLIST_LINKS
-from lib.core.settings import IP_ADDRESS_REGEX
-from lib.core.settings import LONG_LEGAL_DISCLAIMER
-from lib.core.settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
-
-# Class libraries that are used for the program
-from lib.core.sql_scan import SQLiScanner
+# Libraries
 from lib.core.dork_check import DorkScanner
-from lib.core.port_scan import PortScanner
+from lib.core.errors import GoogleBlockException
 from lib.core.hash_cracking import HashCracker
-from lib.core.hash_checker import HashChecker
+from lib.core.hash_cracking.hash_checker import HashChecker
+from lib.core.port_scan import PortScanner
 from lib.core.proxy_finder import attempt_to_connect_to_proxies
+from lib.core.sql_scan.xss_scan import xss
+from lib.core.sql_scan import SQLiScanner
+
+# Settings
+from lib.core.settings import BANNER
+from lib.core.settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
+from lib.core.settings import IP_ADDRESS_REGEX
+from lib.core.settings import LEGAL_DISC
+from lib.core.settings import LOGGER
+from lib.core.settings import LONG_LEGAL_DISCLAIMER
+from lib.core.settings import QUERY_REGEX
+from lib.core.settings import URL_REGEX
+from lib.core.settings import VERSION_STRING
+from lib.core.settings import WORDLIST_LINKS
+from lib.core.settings import create_wordlist
+from lib.core.settings import RANDOM_USER_AGENT
 
 
 if __name__ == '__main__':
@@ -42,13 +44,19 @@ if __name__ == '__main__':
                       help="Verify a given hash type. (MD5, WHIRLPOOL, SHA256, etc..)")
     opts.add_argument("-f", "--find-proxies", action="store_true", dest="proxysearch",
                       help="Attempt to find some proxies automatically")
+    opts.add_argument('-x', '--xss', metavar="URL", dest="xssScan",
+                      help="Check if a URL is vulnerable to XSS")
 
     opts.add_argument('-l', '--legal', action="store_true", dest="legal",
                       help="Display the legal information")
     opts.add_argument('--version', action="store_true", dest="version",
                       help="Show the version number and exit")
     opts.add_argument('--rand-wordlist', action="store_true", dest="random_wordlist",
-                      help="Create a random wordlist to use for dictionary attacks")
+                      help="Create a random wordlist to use for dictionary attacks"),
+    opts.add_argument("--proxy", metavar="PROXY", dest="configProxy",
+                      help="Configure the program to use a proxy when connecting")
+    opts.add_argument('--rand-agent', action="store_true", dest="randomUserAgent",
+                      help="Use a random user agent from a file list")
     args = opts.parse_args()
 
     print(BANNER + "\033[91m{}\033[0m".format(LEGAL_DISC) + "\n") if args.legal is False else \
@@ -132,6 +140,26 @@ if __name__ == '__main__':
                 error_message = "You need to provide a host to scan,"
                 error_message += " this can be given in the form of a URL "
                 error_message += "or a IP address."
+                LOGGER.fatal(error_message)
+
+        if args.xssScan is not None:  # Scan a URL for XSS vulnerabilities
+            if QUERY_REGEX.match(args.xssScan):
+                proxy = args.configProxy if args.configProxy is not None else None
+                header = RANDOM_USER_AGENT if args.randomUserAgent is not False else None
+                if args.configProxy is not None:
+                    LOGGER.info("Proxy configured, running through: {}".format(args.configProxy))
+                if args.randomUserAgent is True:
+                    LOGGER.info("Grabbed random user agent: {}".format(header))
+                LOGGER.info("Searching: {} for XSS vulnerabilities..".format(args.xssScan, proxy=proxy, headers=header))
+                if not xss.main(args.xssScan, proxy=proxy, headers=header):
+                    LOGGER.error("{} does not appear to be vulnerable to XSS".format(args.xssScan))
+                else:
+                    LOGGER.info("{} seems to be vulnerable to XSS.".format(args.xssScan))
+            else:
+                error_message = "The URL you provided does not contain a query "
+                error_message += "(GET) parameter. In order for this scan you run "
+                error_message += "successfully you will need to provide a URL with "
+                error_message += "A query (GET) parameter example: http://127.0.0.1/php?id=2"
                 LOGGER.fatal(error_message)
 
     except KeyboardInterrupt:  # Why you abort me?! :c

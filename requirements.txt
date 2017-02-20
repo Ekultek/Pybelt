@@ -1,3 +1,5 @@
 colorlog==2.10.0
 beautifulsoup4==4.5.3
 protobuf==3.2.0rc2
+requests==2.11.1
+google==1.9.3

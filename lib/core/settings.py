@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.5.8"
+VERSION = "1.0.6.9"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -54,8 +54,9 @@ SAYING = random.choice(["The Hackers ToolBelt..",
 # URL to pull proxies from
 PROXY_URL = "http://proxy.tekbreak.com/100/json"
 
-# Random common column names
+# Random common column names, and random user agents
 RANDOM_COMMON_COLUMN = random.choice(open("{}/lib/text_files/common_columns.txt".format(PATH)).readlines())
+RANDOM_USER_AGENT = random.choice(open("{}/lib/text_files/agents.txt".format(PATH)).readlines()).strip()
 
 # Search query regex to make sure the URLS have a GET parameter
 QUERY_REGEX = re.compile(r"(.*)[?|#](.*){1}\=(.*)")
@@ -158,8 +159,9 @@ BANNER = """\033[94m
 %s\033[0m\n\n
 """ % (VERSION_STRING, SAYING.strip(), CLONE_LINK)
 
-# Path the the search results from a dork scan
+# Path the the search results
 DORK_SCAN_RESULTS_PATH = r"{}\lib\core\dork_check\scan_results".format(os.getcwd())
+PROXY_SCAN_RESULTS = r"{}\lib\core\proxy_finder\proxy_results".format(PATH)
 
 # Error message for when Google blocks your IP address
 GOOGLE_TEMP_BLOCK_ERROR_MESSAGE = "\nYou have been temporarily blocked from running Google searches."
@@ -229,3 +231,9 @@ def create_wordlist(b64link):
         for word in data:
             wordlist.write(word)
     return
+
+
+def create_dir(dir_path):
+    """ Create a directory if it doesn't exist """
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)

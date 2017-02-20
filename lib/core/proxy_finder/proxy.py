@@ -5,9 +5,13 @@ import socket
 import httplib
 from lib.core.settings import PROXY_URL
 from lib.core.settings import LOGGER
+from lib.core.settings import PROXY_SCAN_RESULTS
+from lib.core.settings import create_random_filename
+from lib.core.settings import create_dir
 
 
 def connect_and_pull_info():
+    """ Connect to the proxy source and pull the proxies in JSON form """
     results = {}
     count = 0
     data = json.loads(urllib2.urlopen(PROXY_URL).read())
@@ -19,6 +23,7 @@ def connect_and_pull_info():
 
 
 def attempt_to_connect_to_proxies():
+    """ Attempted connections to the proxies pulled from the JSON data """
     results = []
     prox_info = connect_and_pull_info()
     for i, proxy in enumerate(prox_info, start=1):
@@ -36,7 +41,7 @@ def attempt_to_connect_to_proxies():
                 LOGGER.info("Successful: {}\n\t\tLatency: {}s\n\t\tOrigin: {}\n\t\tAnonymity: {}\n\t\tType: {}".format(
                     candidate.lower(), stop_time, prox_info[i]["country"], prox_info[i]["anonymity"], prox_info[i]["type"])
                 )
-                results.append(prox_info[i]["ip"])
+                results.append(prox_info[i]["ip"] + ":" + prox_info[i]["port"])
             except urllib2.HTTPError:
                 pass
             except urllib2.URLError:
@@ -48,3 +53,9 @@ def attempt_to_connect_to_proxies():
             except socket.error:
                 pass
     LOGGER.info("Found a total of {} proxies.".format(len(results)))
+    filename = create_random_filename()
+    create_dir(PROXY_SCAN_RESULTS)
+    with open(PROXY_SCAN_RESULTS + "\\" + filename + ".txt", "a+") as res:
+        for prox in results:
+            res.write(prox + "\n")
+    LOGGER.info("Results saved to: {}".format(PROXY_SCAN_RESULTS + "\\" + filename + ".txt"))
