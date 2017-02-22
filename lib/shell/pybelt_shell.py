@@ -28,10 +28,12 @@ After you decide what you want to do type: run <command> """
             from lib.pointers import run_sqli_scan
             host = raw_input("Enter a host to scan for SQLi vulnerabilities: ")
             run_sqli_scan(host)
+            exit(0)
         elif command.lower() == "dork":
             from lib.pointers import run_dork_checker
             dork = raw_input("Enter a dork to scan with: ")
             run_dork_checker(dork)
+            exit(0)
         elif command.lower() == "xss":
             from lib.pointers import run_xss_scan
             host = raw_input("Enter a host to check XSS vulnerabilities on: ")
@@ -42,23 +44,28 @@ After you decide what you want to do type: run <command> """
             if user_agent == "":
                 user_agent = None
             run_xss_scan(host, proxy=proxy, user_agent=user_agent)
+            exit(0)
         elif command.lower() == "hashverify":
             from lib.pointers import run_hash_verification
             h = raw_input("Enter a hash to verify: ")
             run_hash_verification(h)
+            exit(0)
         elif command.lower() == "hashcrack":
             from lib.pointers import run_hash_cracker
             h = raw_input("Enter a hash to crack: ")
             t = raw_input("Enter what type (all for none): ")
             full_data = h + ":" + t
             run_hash_cracker(full_data)
+            exit(0)
         elif command.lower() == "port":
             from lib.pointers import run_port_scan
             host = raw_input("Enter a host to scan open ports on: ")
             run_port_scan(host)
+            exit(0)
         elif command.lower() == "proxies":
             from lib.pointers import run_proxy_finder
             run_proxy_finder()
+            exit(0)
         else:
             print("{} is not a valid command. Valid commands are: {}".format(command, ', '.join(commands_list)))
 
