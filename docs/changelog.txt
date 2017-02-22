@@ -1,3 +1,13 @@
+Version 1.0.8.11
+  - Created pointers to the overall functions of the program saved in
+    lib/pointers.py
+  - Created a shell console, when you fail to provide a flag it will default to
+    the shell console and can be run from there
+  - Minor edit to the settings
+  - Edited the overall pybelt.py file to replicate the pointers and create the console
+    call if there is no flag given
+  - Bumped the version number
+
 Version 1.0.7.10
   - Created proxy flag
   - Created random user agent flag
