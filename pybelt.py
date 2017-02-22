@@ -1,33 +1,27 @@
 import argparse
 import random
-import re
-import socket
 import sys
-from urllib2 import HTTPError
 
-# Libraries
-from lib.core.dork_check import DorkScanner
-from lib.core.errors import GoogleBlockException
-from lib.core.hash_cracking import HashCracker
-from lib.core.hash_cracking.hash_checker import HashChecker
-from lib.core.port_scan import PortScanner
-from lib.core.proxy_finder import attempt_to_connect_to_proxies
-from lib.core.sql_scan.xss_scan import xss
-from lib.core.sql_scan import SQLiScanner
+# Pointers
+from lib.pointers import run_proxy_finder
+from lib.pointers import run_xss_scan
+from lib.pointers import run_sqli_scan
+from lib.pointers import run_dork_checker
+from lib.pointers import run_hash_cracker
+from lib.pointers import run_hash_verification
+from lib.pointers import run_port_scan
+
+# Shell
+from lib.shell import pybelt_shell
 
 # Settings
 from lib.core.settings import BANNER
-from lib.core.settings import GOOGLE_TEMP_BLOCK_ERROR_MESSAGE
-from lib.core.settings import IP_ADDRESS_REGEX
 from lib.core.settings import LEGAL_DISC
 from lib.core.settings import LOGGER
 from lib.core.settings import LONG_LEGAL_DISCLAIMER
-from lib.core.settings import QUERY_REGEX
-from lib.core.settings import URL_REGEX
 from lib.core.settings import VERSION_STRING
 from lib.core.settings import WORDLIST_LINKS
 from lib.core.settings import create_wordlist
-from lib.core.settings import RANDOM_USER_AGENT
 
 
 if __name__ == '__main__':
@@ -63,6 +57,21 @@ if __name__ == '__main__':
         BANNER + "\033[91m{}\033[0m".format(LONG_LEGAL_DISCLAIMER + "\n")
 
     try:
+        if len(sys.argv) == 1:
+            prompt = pybelt_shell.PybeltConsole()
+            prompt.prompt = "pybelt > "
+            info_message = "You have provided no flag "
+            info_message += "so you have been automatically redirected "
+            info_message += "to the Pybelt Console. Type 'help run' "
+            info_message += "for a list of available commands, and "
+            info_message += "'run <command>' to run the command, type "
+            info_message += "'quit' to exit the console.."
+            try:
+                prompt.cmdloop(LOGGER.info(info_message))
+            except TypeError:
+                LOGGER.info("Terminating session...")
+                exit(0)
+
         if args.version is True:  # Show the version number and exit
             LOGGER.info(VERSION_STRING)
             sys.exit(0)
@@ -73,94 +82,25 @@ if __name__ == '__main__':
             LOGGER.info("Wordlist created, resuming process..")
 
         if args.proxysearch is True:  # Find some proxies
-            LOGGER.info("Starting proxy search..")
-            attempt_to_connect_to_proxies()
+            run_proxy_finder()
 
         if args.hashcheck is not None:  # Check what hash type you have
-            LOGGER.info("Analyzing hash: '{}'".format(args.hashcheck))
-            HashChecker(args.hashcheck).obtain_hash_type()
+            run_hash_verification(args.hashcheck)
 
         if args.sqliscan is not None:  # SQLi scanning
-            try:
-                if QUERY_REGEX.match(args.sqliscan):
-                    LOGGER.info("Starting SQLi scan on '{}'..".format(args.sqliscan))
-                    LOGGER.info(SQLiScanner(args.sqliscan).sqli_search())
-                else:
-                    LOGGER.error("URL does not contain a query (GET) parameter. Example: http://example.com/php?id=2")
-            except HTTPError as e:
-                error_message = "URL: '{}' threw an exception: '{}' ".format(args.sqliscan, e)
-                error_message += "and Pybelt is unable to resolve the URL, "
-                error_message += "this could mean that the URL is not allowing connections "
-                error_message += "or that the URL is bad. Attempt to connect "
-                error_message += "to the URL manually, if a connection occurs "
-                error_message += "make an issue."
-                LOGGER.fatal(error_message)
+            run_sqli_scan(args.sqliscan)
 
         if args.dorkcheck is not None:  # Dork checker, check if your dork isn't shit
-            LOGGER.info("Starting dork scan, using query: '{}'..".format(args.dorkcheck))
-            try:
-                LOGGER.info(DorkScanner(args.dorkcheck).check_urls_for_queries())
-            except HTTPError:
-                LOGGER.fatal(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
+            run_dork_checker(args.dorkcheck)
 
         if args.hash is not None:  # Try and crack a hash
-            try:
-                items = list(''.join(args.hash).split(":"))
-                if items[1] == "all":
-                    LOGGER.info("Starting hash cracking without knowledge of algorithm...")
-                    HashCracker(items[0]).try_all_algorithms()
-                else:
-                    LOGGER.info("Starting hash cracking using %s as algorithm type.." % items[1])
-                    HashCracker(items[0], type=items[1]).try_certain_algorithm()
-            except IndexError:
-                error_message = "You must specify a hash type in order for this to work. "
-                error_message += "Example: 'python pybelt.py -c 098f6bcd4621d373cade4e832627b4f6:md5'"
-                LOGGER.fatal(error_message)
+            run_hash_cracker(args.hash)
 
         if args.portscan is not None:  # Scan a given host for open ports
-            if re.search(IP_ADDRESS_REGEX, sys.argv[2]) is not None:
-                LOGGER.info("Starting port scan on IP: {}".format(args.portscan))
-                LOGGER.info(PortScanner(args.portscan).connect_to_host())
-            elif re.search(URL_REGEX, sys.argv[2]) is not None and re.search(QUERY_REGEX, sys.argv[2]) is None:
-                try:
-                    LOGGER.info("Fetching resolve IP...")
-                    ip_address = socket.gethostbyname(args.portscan)
-                    LOGGER.info("Done! IP: {}".format(ip_address))
-                    LOGGER.info("Starting scan on URL: {} IP: {}".format(args.portscan, ip_address))
-                    PortScanner(ip_address).connect_to_host()
-                except socket.gaierror:
-                    error_message = "Unable to resolve IP address from {}.".format(args.portscan)
-                    error_message += " You can manually get the IP address and try again,"
-                    error_message += " dropping the query parameter in the URL (IE php?id=),"
-                    error_message += " or dropping the http or https"
-                    error_message += " and adding www in place of it. IE www.google.com"
-                    error_message += " may fix this issue."
-                    LOGGER.fatal(error_message)
-            else:
-                error_message = "You need to provide a host to scan,"
-                error_message += " this can be given in the form of a URL "
-                error_message += "or a IP address."
-                LOGGER.fatal(error_message)
+            run_port_scan(args.portscan)
 
         if args.xssScan is not None:  # Scan a URL for XSS vulnerabilities
-            if QUERY_REGEX.match(args.xssScan):
-                proxy = args.configProxy if args.configProxy is not None else None
-                header = RANDOM_USER_AGENT if args.randomUserAgent is not False else None
-                if args.configProxy is not None:
-                    LOGGER.info("Proxy configured, running through: {}".format(args.configProxy))
-                if args.randomUserAgent is True:
-                    LOGGER.info("Grabbed random user agent: {}".format(header))
-                LOGGER.info("Searching: {} for XSS vulnerabilities..".format(args.xssScan, proxy=proxy, headers=header))
-                if not xss.main(args.xssScan, proxy=proxy, headers=header):
-                    LOGGER.error("{} does not appear to be vulnerable to XSS".format(args.xssScan))
-                else:
-                    LOGGER.info("{} seems to be vulnerable to XSS.".format(args.xssScan))
-            else:
-                error_message = "The URL you provided does not contain a query "
-                error_message += "(GET) parameter. In order for this scan you run "
-                error_message += "successfully you will need to provide a URL with "
-                error_message += "A query (GET) parameter example: http://127.0.0.1/php?id=2"
-                LOGGER.fatal(error_message)
+            run_xss_scan(args.xssScan, args.configProxy, args.randomUserAgent)
 
     except KeyboardInterrupt:  # Why you abort me?! :c
         LOGGER.error("User aborted.")
