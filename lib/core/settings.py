@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.6.9"
+VERSION = "1.0.8.11"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -152,12 +152,12 @@ BANNER = """\033[94m
    /_/    _/  /_/   /_/  /_/    _/  /_/        /_/    /_/          |
   /_/_/_/      _/_/_/   /_/_/_/_/   /_/_/_/   /_/    /_/_/
  /_/              _/
-/_/     |     /_/_/    %s
+/_/     |     /_/_/    {}
       \033[94m- * -
         |\033[0m
-\033[94m%s
-%s\033[0m\n\n
-""" % (VERSION_STRING, SAYING.strip(), CLONE_LINK)
+\033[94m{}
+{}\033[0m\n\n
+""".format(VERSION_STRING, SAYING.strip(), CLONE_LINK)
 
 # Path the the search results
 DORK_SCAN_RESULTS_PATH = r"{}\lib\core\dork_check\scan_results".format(os.getcwd())
