@@ -15,7 +15,7 @@ def connect_and_pull_info():
     results = {}
     count = 0
     data = json.loads(urllib2.urlopen(PROXY_URL).read())
-    for i in range(0, 30):
+    for i in range(0, 60):
         count += 1
         results[count] = data[i]
     LOGGER.info("Found {} possible proxies, moving to connection attempts..".format(len(results)))
