@@ -1,6 +1,7 @@
 import argparse
 import random
 import sys
+import getpass
 
 # Pointers
 from lib.pointers import run_proxy_finder
@@ -57,18 +58,17 @@ if __name__ == '__main__':
         BANNER + "\033[91m{}\033[0m".format(LONG_LEGAL_DISCLAIMER + "\n")
 
     try:
-        if len(sys.argv) == 1:
-            prompt = pybelt_shell.PybeltConsole()
-            prompt.prompt = "pybelt > "
-            info_message = "You have provided no flag "
-            info_message += "so you have been automatically redirected "
-            info_message += "to the Pybelt Console. Type 'help run' "
-            info_message += "for a list of available commands, and "
-            info_message += "'run <command>' to run the command, type "
-            info_message += "'quit' to exit the console.."
+        if len(sys.argv) == 1:  # If you failed to provide an argument
+            prompt = pybelt_shell.PybeltConsole()  # Launch the shell
+            prompt.prompt = "{}@pybelt > ".format(getpass.getuser())
+            info_message = "You have failed to provide a flag so you have been "
+            info_message += "redirected to the Pybelt Console. For available "
+            info_message += "flags type: 'run -hh', to see help type: 'help' "
+            info_message += "to exit the console type: 'quit'"
             try:
                 prompt.cmdloop(LOGGER.info(info_message))
-            except TypeError:
+            except TypeError as e:
+                print e
                 LOGGER.info("Terminating session...")
                 exit(0)
 
