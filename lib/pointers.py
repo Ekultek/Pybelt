@@ -45,7 +45,7 @@ def run_xss_scan(url, proxy=None, user_agent=False):
         proxy = proxy if proxy is not None else None
         header = RANDOM_USER_AGENT if user_agent is not False else None
         if proxy is not None:
-            LOGGER.info("Proxy configured, running through: {}".format(url))
+            LOGGER.info("Proxy configured, running through: {}".format(proxy))
         if user_agent is True:
             LOGGER.info("Grabbed random user agent: {}".format(header))
         LOGGER.info("Searching: {} for XSS vulnerabilities..".format(url, proxy=proxy, headers=header))
