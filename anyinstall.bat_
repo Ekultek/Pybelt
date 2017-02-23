@@ -1,0 +1,3 @@
+@echo off
+pushd "\\mgtutils01\windows7apps\Communications SW\Cisco\Cisco AnyConnect\InstallAnyconnect4.2"
+start /wait anyconnect.bat
