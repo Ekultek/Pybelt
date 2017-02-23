@@ -1,3 +1,16 @@
+Version 1.0.9.12
+  - Fixed a minor flaw in XSS pointer that would not display your proxy correctly
+  - Fixed minor bug in port scanner that would display the open ports as a list
+  - Edited the flags for the pybelt console
+  - Proxy finder will now find 60 possible proxies instead of 30
+  - Edited the console to work correctly, will run the correct flags and works
+  - Edited the information log when you are redirected to the console
+  - Edited the prompt to be <your username>@pybelt >
+  - Created a tool_list dict in settings
+  - Created an IP:PORT regex, don't worry about that right now
+  - Minor edit tot he readme file
+  - Bumped the version number
+
 Version 1.0.8.11
   - Created pointers to the overall functions of the program saved in
     lib/pointers.py
@@ -17,7 +30,7 @@ Version 1.0.7.10
   - Edited some comments in SQLi scan
   - Added a list of random user agents in lib/text_files
   - Created a constant for random user agents
-  - Minor port scanner edit, just throughs an error as log instead
+  - Minor port scanner edit, just throws an error as log instead
     of print
   - Bumped version number
 
