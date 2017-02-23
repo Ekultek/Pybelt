@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.8.11"
+VERSION = "1.0.9.12"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -60,6 +60,9 @@ RANDOM_USER_AGENT = random.choice(open("{}/lib/text_files/agents.txt".format(PAT
 
 # Search query regex to make sure the URLS have a GET parameter
 QUERY_REGEX = re.compile(r"(.*)[?|#](.*){1}\=(.*)")
+
+# Regex to match an IP and port given like so: 127.0.0.1:445
+IP_PORT_REGEX = re.compile(r"((\d{1,3}.){3}\d{1,3}:\d+)")
 
 # Regex to match errors thrown by the database
 SQLI_ERROR_REGEX = (
@@ -203,6 +206,18 @@ WORDLIST_LINKS = [
     'aHR0cHM6Ly9naXN0LmdpdGh1YnVzZXJjb250ZW50LmNvbS9Fa3VsdGVrLzNmMzcxMWUzMDdlOGM0ZTM0MDkzYzI1OGFkN2UzZWZkL3Jhdy9hMjNiYmM3YTgxNTZhOGU5NTU3NmViYTA3MmIwZDg4ZTJmYjk1MzZiL2dtYWlsXzIudHh0',
     'aHR0cHM6Ly9naXN0LmdpdGh1YnVzZXJjb250ZW50LmNvbS9Fa3VsdGVrL2U3MzE4MGM3MGZmMzY3NDFhM2M4NzIzMDZiNTFhOTU1L3Jhdy9jODE0YjFjOTZiNGJkYzZlYTRlZDE3MmMzNDIwOTg2NTBjOTcyYWZjL2J0NC50eHQ='
 ]
+
+# Program flags for the CLI console, with description
+TOOL_LIST = {
+    "-s": "(Run a SQLi vulnerability scan on a URL)",
+    "-x": "(Run a cross site scripting scan on a URL)",
+    "-p": "(Run a Port scan on a URL or given host)",
+    "-h": "(Attempt to crack a given hash)",
+    "-v": "(Verify the algorithm used for a given hash)",
+    "-d": "(Do a dork check to verify if your dork is good)",
+    "-f": "(Find usable proxies)",
+    "-hh": "(Produce a help menu with basic descriptions)"
+}
 
 
 def create_random_filename():
