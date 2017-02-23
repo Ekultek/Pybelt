@@ -8,7 +8,7 @@ from lib.core.settings import RESERVED_PORTS
 
 class PortScanner(object):
 
-    connection_made = []  # Connection made in list form
+    connection_made = ""  # Connection made in list form
 
     def __init__(self, host):
         self.host = host
@@ -38,7 +38,7 @@ class RunScanThread(PortScanner):
                 sock.settimeout(3)
                 if res == 0:
                     LOGGER.info("[*] Open: {}  {}".format(port, RESERVED_PORTS[port]))
-                    self.connection_made.append(port)
+                    self.connection_made += "{}, ".format(port)
                 sock.close()
             except Exception, e:
                 print e
