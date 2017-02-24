@@ -1,3 +1,10 @@
+Version 1.0.10.13
+  - Added support for two new hash types, blowfish and wordpress v4.x\3.x
+  - Edited the shell to accept none as input and default to None
+  - Edited the do_quit shell function
+  - Minor styling tweak to the proxy finder
+  - Bumped the version number
+
 Version 1.0.9.12
   - Fixed a minor flaw in XSS pointer that would not display your proxy correctly
   - Fixed minor bug in port scanner that would display the open ports as a list
