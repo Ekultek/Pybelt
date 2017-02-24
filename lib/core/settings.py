@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.9.12"
+VERSION = "1.0.10.13"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -143,7 +143,9 @@ HASH_TYPE_REGEX = {
                                                           "Oracle 7-10g", "FNV-164", "CRC-64"],
     re.compile(r"^\*[a-f0-9]{40}$", re.IGNORECASE):      ["MySQL5.x", "MySQL4.1"],
     re.compile(r"^[a-f0-9]{48}$", re.IGNORECASE):        ["Haval-192", "Tiger-192", "SHA-1(Oracle)",
-                                                          "XSHA (v10.4 - v10.6)"]
+                                                          "XSHA (v10.4 - v10.6)"],
+    re.compile(r"^\$[\w.]{1}\$\w+\$\S{22}$", re.IGNORECASE): ["Wordpress v4.x", "Wordpress v3.x"],
+    re.compile(r"^\$\d\w\$\d+\$\S{53}$", re.IGNORECASE): ["Blowfish"]
 }
 
 # Sexy ass banner
