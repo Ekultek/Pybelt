@@ -39,9 +39,10 @@ def attempt_to_connect_to_proxies():
                 urllib2.urlopen(request, timeout=10)
                 stop_time = time.time() - start_time
                 LOGGER.info("Successful: {}\n\t\tLatency: {}s\n\t\tOrigin: {}\n\t\tAnonymity: {}\n\t\tType: {}".format(
-                    candidate.lower(), stop_time, prox_info[i]["country"], prox_info[i]["anonymity"], prox_info[i]["type"])
-                )
-                results.append(prox_info[i]["ip"] + ":" + prox_info[i]["port"])
+                    candidate.lower(), stop_time, prox_info[i]["country"],
+                    prox_info[i]["anonymity"], prox_info[i]["type"]
+                ))
+                results.append("http://" + prox_info[i]["ip"] + ":" + prox_info[i]["port"])
             except urllib2.HTTPError:
                 pass
             except urllib2.URLError:
