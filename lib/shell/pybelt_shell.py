@@ -12,7 +12,6 @@ class PybeltConsole(Cmd):
         """
         Specs: Produce a help menu with basic descriptions
         Usage: run menu
-        :return:
         """
         print("\t  Command    Descriptor")
         for key in TOOL_LIST.iterkeys():
@@ -55,6 +54,8 @@ class PybeltConsole(Cmd):
             from lib.pointers import run_hash_cracker
             h = raw_input("Enter a hash to crack: ")
             t = raw_input("Enter what type (all for none): ")
+            if t is None or t == "":
+                t = "all"
             full_data = h + ":" + t
             run_hash_cracker(full_data)
         elif command.lower() == "-p":
