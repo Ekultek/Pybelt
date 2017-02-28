@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.11.14"
+VERSION = "1.0.12.15"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -254,3 +254,12 @@ def create_dir(dir_path):
     """ Create a directory if it doesn't exist """
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
+
+
+def hide_banner(hide=False, legal=False):
+    """ Hide the banner """
+    if hide is False:
+        print(BANNER + "\033[91m{}\033[0m".format(LEGAL_DISC) + "\n") if legal is False else \
+            BANNER + "\033[91m{}\033[0m".format(LONG_LEGAL_DISCLAIMER + "\n")
+    else:
+        return
