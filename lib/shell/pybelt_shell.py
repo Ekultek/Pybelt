@@ -8,35 +8,48 @@ class PybeltConsole(Cmd):
     """ Interactive shell that will launch if you fail to pass a flag """
 
     @staticmethod
-    def help_menu():
+    def help_menu(magic_number=13):
         """
         Specs: Produce a help menu with basic descriptions
         Usage: run menu
         """
-        print("\t  Command    Descriptor")
+        print("Command  Secondary-Command  Descriptor")
+        primary_spacer = ""
+        descrip_spacer = ""
+        secondary_spacer = ""
         for key in TOOL_LIST.iterkeys():
-            print("""
-            {}       {}""".format(key, TOOL_LIST[key]))
+            if len(key) == 3:
+                primary_spacer = " " * 2
+                secondary_spacer = " " * 10
+                descrip_spacer = " " * (magic_number - len(TOOL_LIST[key][1]))
+            else:
+                primary_spacer = " " * 2
+                secondary_spacer = " " * 11
+                descrip_spacer = " " * (magic_number - len(TOOL_LIST[key][1]))
+
+            print("{}{}{}{}{}{}".format(
+                primary_spacer, key, secondary_spacer,
+                TOOL_LIST[key][1], descrip_spacer, TOOL_LIST[key][0]
+            ))
 
     def do_run(self, command):
         """
         Specs: Run one of the tools by their hyphened name
         Usage: run [tool-hyphen]
         """
-
         if len(command) == 0:
             print("You have not supplied any command, available commands: {}".format(', '.join(
                 TOOL_LIST
             )))
-        elif command.lower() == "-s":
+        elif command.lower() == "-s" or command.lower().startswith("sqli"):
             from lib.pointers import run_sqli_scan
             host = raw_input("Enter a host to scan for SQLi vulnerabilities: ")
             run_sqli_scan(host)
-        elif command.lower() == "-d":
+        elif command.lower() == "-d" or command.lower().startswith("dork"):
             from lib.pointers import run_dork_checker
             dork = raw_input("Enter a dork to scan with: ")
             run_dork_checker(dork)
-        elif command.lower() == "-x":
+        elif command.lower() == "-x" or command.lower().startswith("xss"):
             from lib.pointers import run_xss_scan
             host = raw_input("Enter a host to check XSS vulnerabilities on: ")
             proxy = raw_input("Enter a proxy to user (enter for none): ")
@@ -46,11 +59,11 @@ class PybeltConsole(Cmd):
             if user_agent == "":
                 user_agent = None
             run_xss_scan(host, proxy=proxy, user_agent=user_agent)
-        elif command.lower() == "-v":
+        elif command.lower() == "-v" or command.lower().startswith("verify"):
             from lib.pointers import run_hash_verification
             h = raw_input("Enter a hash to verify: ")
             run_hash_verification(h)
-        elif command.lower() == "-h":
+        elif command.lower() == "-h" or command.lower().startswith("crack"):
             from lib.pointers import run_hash_cracker
             h = raw_input("Enter a hash to crack: ")
             t = raw_input("Enter what type (all for none): ")
@@ -58,19 +71,29 @@ class PybeltConsole(Cmd):
                 t = "all"
             full_data = h + ":" + t
             run_hash_cracker(full_data)
-        elif command.lower() == "-p":
+        elif command.lower() == "-p" or command.lower().startswith("port"):
             from lib.pointers import run_port_scan
             host = raw_input("Enter a host to scan open ports on: ")
             run_port_scan(host)
-        elif command.lower() == "-f":
+        elif command.lower() == "-f" or command.lower().startswith("proxy"):
             from lib.pointers import run_proxy_finder
             run_proxy_finder()
-        elif command.lower() == "-hh":
+        elif command.lower() == "-hh" or command.lower().startswith("help"):
             self.help_menu()
         else:
             print("{}".format(self.help_menu()))
 
-    def do_quit(self, line):
-        """ Terminate your running session """
+    def do_quit(self, _):
+        """
+        Specs: Terminate your running session
+        Usage: quit
+        """
         print("[*] Terminating session..")
         exit(0)
+
+    def do_do(self, command):
+        """
+        Specs: Run a command by it's hyphened name
+        Usage: do [hyphened-name]
+        """
+        self.do_run(command)
