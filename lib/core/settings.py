@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.10.13"
+VERSION = "1.0.11.14"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -209,16 +209,16 @@ WORDLIST_LINKS = [
     'aHR0cHM6Ly9naXN0LmdpdGh1YnVzZXJjb250ZW50LmNvbS9Fa3VsdGVrL2U3MzE4MGM3MGZmMzY3NDFhM2M4NzIzMDZiNTFhOTU1L3Jhdy9jODE0YjFjOTZiNGJkYzZlYTRlZDE3MmMzNDIwOTg2NTBjOTcyYWZjL2J0NC50eHQ='
 ]
 
-# Program flags for the CLI console, with description
+# Program flags for the CLI console, with description and secondary call flag
 TOOL_LIST = {
-    "-s": "(Run a SQLi vulnerability scan on a URL)",
-    "-x": "(Run a cross site scripting scan on a URL)",
-    "-p": "(Run a Port scan on a URL or given host)",
-    "-h": "(Attempt to crack a given hash)",
-    "-v": "(Verify the algorithm used for a given hash)",
-    "-d": "(Do a dork check to verify if your dork is good)",
-    "-f": "(Find usable proxies)",
-    "-hh": "(Produce a help menu with basic descriptions)"
+    "-s": ["(Run a SQLi vulnerability scan on a URL)", "sqli"],
+    "-x": ["(Run a cross site scripting scan on a URL)", "xss"],
+    "-p": ["(Run a Port scan on a URL or given host)", "port"],
+    "-h": ["(Attempt to crack a given hash)", "crack"],
+    "-v": ["(Verify the algorithm used for a given hash)", "verify"],
+    "-d": ["(Do a dork check to verify if your dork is good)", "dork"],
+    "-f": ["(Find usable proxies)", "proxy"],
+    "-hh": ["(Produce a help menu with basic descriptions)", "help"]
 }
 
 
