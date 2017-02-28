@@ -23,6 +23,7 @@ from lib.core.settings import LONG_LEGAL_DISCLAIMER
 from lib.core.settings import VERSION_STRING
 from lib.core.settings import WORDLIST_LINKS
 from lib.core.settings import create_wordlist
+from lib.core.settings import hide_banner
 
 
 if __name__ == '__main__':
@@ -42,6 +43,8 @@ if __name__ == '__main__':
     opts.add_argument('-x', '--xss', metavar="URL", dest="xssScan",
                       help="Check if a URL is vulnerable to XSS")
 
+    opts.add_argument('--banner', action="store_true", dest="banner",
+                      help="Hide the banner")
     opts.add_argument('-l', '--legal', action="store_true", dest="legal",
                       help="Display the legal information")
     opts.add_argument('--version', action="store_true", dest="version",
@@ -52,10 +55,17 @@ if __name__ == '__main__':
                       help="Configure the program to use a proxy when connecting")
     opts.add_argument('--rand-agent', action="store_true", dest="randomUserAgent",
                       help="Use a random user agent from a file list")
+
+    opts.add_argument('--anon', metavar="ANON", dest="anonLvl",
+                      help=argparse.SUPPRESS)
+    opts.add_argument('--hash-list', metavar="FILE", dest="hashList",
+                      help=argparse.SUPPRESS)
+    opts.add_argument('--dork-list', metavar="FILE", dest="dorkList",
+                      help=argparse.SUPPRESS)
     args = opts.parse_args()
 
-    print(BANNER + "\033[91m{}\033[0m".format(LEGAL_DISC) + "\n") if args.legal is False else \
-        BANNER + "\033[91m{}\033[0m".format(LONG_LEGAL_DISCLAIMER + "\n")
+    hide_banner(hide=True if args.banner else False,
+                legal=True if args.legal else False) if args.version is False else hide_banner(hide=True)
 
     try:
         if len(sys.argv) == 1:  # If you failed to provide an argument
@@ -73,6 +83,7 @@ if __name__ == '__main__':
                 exit(0)
 
         if args.version is True:  # Show the version number and exit
+            hide_banner(hide=True)
             LOGGER.info(VERSION_STRING)
             sys.exit(0)
 
