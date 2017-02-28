@@ -1,3 +1,8 @@
+Version 1.0.12.15
+  - Added a banner flag, you can now hide the banner
+  - Created a hide_banner function
+  - Bumped version number
+
 Version 1.0.11.14
   - Updated the shell a bit, now has secondary and primary commands
   - Edited the TOOL_LIST constant in settings in order to have primary and secondary
