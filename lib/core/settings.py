@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.12.15"
+VERSION = "1.0.13.16"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -65,43 +65,43 @@ QUERY_REGEX = re.compile(r"(.*)[?|#](.*){1}\=(.*)")
 IP_PORT_REGEX = re.compile(r"((\d{1,3}.){3}\d{1,3}:\d+)")
 
 # Regex to match errors thrown by the database
-SQLI_ERROR_REGEX = (
+SQLI_ERROR_REGEX = {
     # PostgreSQL
-    re.compile(r"PostgreSQL.*ERROR"), re.compile(r"Warning.*\Wpg_.*"),
-    re.compile(r"valid PostgreSQL result"), re.compile(r"Npgsql\."),
+    re.compile(r"PostgreSQL.*ERROR"): "PostgreSQL", re.compile(r"Warning.*\Wpg_.*"): "PostgreSQL",
+    re.compile(r"valid PostgreSQL result"): "PostgreSQL", re.compile(r"Npgsql\."): "PostgreSQL",
 
     # MS SQL Server
-    re.compile(r"Driver.* SQL[\-_ ]*Server"), re.compile(r"OLE DB.* SQL Server"),
-    re.compile(r"(\W|\A)SQL Server.*Driver"), re.compile(r"Warning.*mssql_.*"),
-    re.compile(r"(\W|\A)SQL Server.*[0-9a-fA-F]{8}"), re.compile(r"(?s)Exception.*\WSystem\.Data\.SqlClient\."),
-    re.compile(r"(?s)Exception.*\WRoadhouse\.Cms\."),
+    re.compile(r"Driver.* SQL[\-_ ]*Server"): "MS SQL Server", re.compile(r"OLE DB.* SQL Server"): "MS SQL Server",
+    re.compile(r"(\W|\A)SQL Server.*Driver"): "MS SQL Server", re.compile(r"Warning.*mssql_.*"): "MS SQL Server",
+    re.compile(r"(\W|\A)SQL Server.*[0-9a-fA-F]{8}"): "MS SQL Server", re.compile(r"(?s)Exception.*\WSystem\.Data\.SqlClient\."): "MS SQL Server",
+    re.compile(r"(?s)Exception.*\WRoadhouse\.Cms\."): "MS SQL Server",
 
     # MS Access
-    re.compile(r"Microsoft Access Driver"), re.compile(r"JET Database Engine"),
-    re.compile(r"Access Database Engine"),
+    re.compile(r"Microsoft Access Driver"): "MS Access", re.compile(r"JET Database Engine"): "MS Access",
+    re.compile(r"Access Database Engine"): "MS Access",
 
     # Oracle
-    re.compile(r"\bORA-[0-9][0-9][0-9][0-9]"), re.compile(r"Oracle error"),
-    re.compile(r"Oracle.*Driver"), re.compile(r"Warning.*\Woci_.*"),
-    re.compile(r"Warning.*\Wora_.*"),
+    re.compile(r"\bORA-[0-9][0-9][0-9][0-9]"): "Oracle", re.compile(r"Oracle error"): "Oracle",
+    re.compile(r"Oracle.*Driver"): "Oracle", re.compile(r"Warning.*\Woci_.*"): "Oracle",
+    re.compile(r"Warning.*\Wora_.*"): "Oracle",
 
     # IBM DB2
-    re.compile(r"CLI Driver.*DB2"), re.compile(r"DB2 SQL error"),
-    re.compile(r"\bdb2_\w+\("),
+    re.compile(r"CLI Driver.*DB2"): "IBM DB2", re.compile(r"DB2 SQL error"): "IBM DB2",
+    re.compile(r"\bdb2_\w+\("): "IBM DB2",
 
     # SQLite
-    re.compile(r"SQLite/JDBCDriver"), re.compile(r"SQLite.Exception"),
-    re.compile(r"System.Data.SQLite.SQLiteException"), re.compile(r"Warning.*sqlite_.*"),
-    re.compile(r"Warning.*SQLite3::"), re.compile(r"\[SQLITE_ERROR\]"),
+    re.compile(r"SQLite/JDBCDriver"): "SQLite", re.compile(r"SQLite.Exception"): "SQLite",
+    re.compile(r"System.Data.SQLite.SQLiteException"): "SQLite", re.compile(r"Warning.*sqlite_.*"): "SQLite",
+    re.compile(r"Warning.*SQLite3::"): "SQLite", re.compile(r"\[SQLITE_ERROR\]"): "SQLite",
 
     # Sysbase
-    re.compile(r"(?i)Warning.*sybase.*"), re.compile(r"Sybase message"),
-    re.compile(r"Sybase.*Server message.*"),
+    re.compile(r"(?i)Warning.*sybase.*"): "Sysbase", re.compile(r"Sybase message"): "Sysbase",
+    re.compile(r"Sybase.*Server message.*"): "Sysbase",
 
     # MySQL
-    re.compile(r"SQL syntax.*MySQL"), re.compile("Warning.*mysql_.*"),
-    re.compile(r"valid MySQL result"), re.compile(r"MySqlClient\."),
-)
+    re.compile(r"SQL syntax.*MySQL"): "MySQL", re.compile("Warning.*mysql_.*"): "MySQL",
+    re.compile(r"valid MySQL result"): "MySQL", re.compile(r"MySqlClient\."): "MySQL",
+}
 
 # Regex to match syntax
 SYNTAX_REGEX = re.compile(r"\W+$")
