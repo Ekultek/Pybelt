@@ -1,3 +1,9 @@
+Version 1.0.13.16
+  - Added more checks to SQLi scans
+  - Updated SQLi scan to include the backend database type
+  - Updated the SQL_ERROR_REGEX constant to include DB types
+  - Bumped the version number
+
 Version 1.0.12.15
   - Added a banner flag, you can now hide the banner
   - Created a hide_banner function
