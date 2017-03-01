@@ -18,10 +18,12 @@ class SQLiScanner(object):
         self.agent = agent
         self.int = random.randint(1, 13)
         self.error_syntax = ["'", "--", ';', '"', "/*", "'/*", "'--", '"--', "';", '";', '`',
-                             " AND {}={}".format(self.int, self.int),
-                             " OR {}={}".format(self.int, self.int),
-                             " union false {}".format(RANDOM_COMMON_COLUMN.strip()),
-                             " UNION {}".format(RANDOM_COMMON_COLUMN.strip())]
+                             " AND {int}={int}".format(int=self.int),
+                             " OR {int}={int}".format(int=self.int),
+                             " OR NOT {int}={int}".format(int=self.int),
+                             " UNION FALSE {}".format(RANDOM_COMMON_COLUMN.strip()),
+                             " UNION {}".format(RANDOM_COMMON_COLUMN.strip()),
+                             " AND {int}=IF(({int})),SLEEP({int}),{int}".format(int=self.int)]
 
     @staticmethod
     def obtain_inject_query(url):
@@ -35,7 +37,7 @@ class SQLiScanner(object):
         ...
         http://google.com/#?id=2 AND 1=1
         ...
-        http://google.com/#?id=2 union false table
+        http://google.com/#?id=2 UNION FALSE table
         """
         results = set()
         for syntax in self.error_syntax:
@@ -51,10 +53,11 @@ class SQLiScanner(object):
                 data = urllib2.urlopen(url).read()
                 soup = [BeautifulSoup(data, 'html.parser')]
                 for html in soup:
-                    for regex in SQLI_ERROR_REGEX:
+                    for regex in SQLI_ERROR_REGEX.keys():
                         if regex.findall(str(html)):
                             self.vulnerable = True
-                            return "%s appears to have a SQL injection vulnerability at %s" % (
-                                    self.url, query)
+                            sqli_info = "'%s' appears to be vulnerable to SQL injection " % self.url
+                            sqli_info += "at (%s). The backend DBMS appears to be: %s." % (query, SQLI_ERROR_REGEX[regex])
+                            return sqli_info
         if self.vulnerable is False:
             return "%s is not vulnerable to SQL injection." % self.url
