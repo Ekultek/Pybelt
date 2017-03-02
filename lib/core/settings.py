@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.13.16"
+VERSION = "1.0.14.17"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -32,9 +32,6 @@ TYPE_COLORS = {"dev": 33, "stable": 92}
 VERSION_STRING = "\033[92m{}\033[0m(\033[{}m\033[1mdev\033[0m)".format(VERSION, TYPE_COLORS["dev"]) if len(
     VERSION) >= 4 else \
     "\033[92m{}\033[0m(\033[{}m\033[1mstable\033[0m)".format(VERSION, TYPE_COLORS["stable"])
-
-# Clone link
-CLONE_LINK = "https://github.com/ekultek/pybelt.git"
 
 # Basic legal disclaimer
 LEGAL_DISC = "[!] legal disclaimer: This program is intended for learning purposes, any malicious intent is on you, " \
@@ -51,8 +48,10 @@ SAYING = random.choice(["The Hackers ToolBelt..",
                         "The Hackers Best Friend..",
                         "Hacking Made Easy.."])
 
-# URL to pull proxies from
+# URLs to make the program work
 PROXY_URL = "http://proxy.tekbreak.com/100/json"
+CLONE_LINK = "https://github.com/ekultek/pybelt.git"
+MD5_CHECKSUM_URL = "https://raw.githubusercontent.com/Ekultek/Pybelt/master/docs/checksum.md5"
 
 # Random common column names, and random user agents
 RANDOM_COMMON_COLUMN = random.choice(open("{}/lib/text_files/common_columns.txt".format(PATH)).readlines())
@@ -218,6 +217,7 @@ TOOL_LIST = {
     "-v": ["(Verify the algorithm used for a given hash)", "verify"],
     "-d": ["(Do a dork check to verify if your dork is good)", "dork"],
     "-f": ["(Find usable proxies)", "proxy"],
+    "-u": ["(Update the program)", "update"],
     "-hh": ["(Produce a help menu with basic descriptions)", "help"]
 }
 
@@ -263,3 +263,35 @@ def hide_banner(hide=False, legal=False):
             BANNER + "\033[91m{}\033[0m".format(LONG_LEGAL_DISCLAIMER + "\n")
     else:
         return
+
+
+def update_pybelt():
+    """ Update the program """
+    import subprocess
+    LOGGER.info("Updating pybelt..")
+    updater = subprocess.check_output(["git", "pull", "origin", "master"])
+    if "Already up-to-date." in updater:
+        LOGGER.warn("Pybelt is even with origin master.")
+        exit(0)
+    elif "error" or "Error" in updater:
+        error_message = "Unable to update Pybelt, an error occurred "
+        error_message += "the newest version can be found here: {}".format(CLONE_LINK)
+        LOGGER.error(error_message)
+        exit(1)
+    else:
+        LOGGER.info("Pybelt has been updated successfully to {}".format(VERSION))
+        exit(0)
+
+
+def integrity_check(url=MD5_CHECKSUM_URL):
+    """ Check the integrity of the application """
+    if open("{}\\docs\\checksum.md5".format(PATH)).read() == urllib2.urlopen(url).read():
+        pass
+    else:
+        checksum_fail = "Integrity check failed.."
+        LOGGER.fatal(checksum_fail)
+        update = prompt("Would you like to update to the latest version[y/N]: ")
+        if update.upper().startswith("Y"):
+            update_pybelt()
+        else:
+            exit(1)
