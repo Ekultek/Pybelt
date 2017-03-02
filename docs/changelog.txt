@@ -1,3 +1,11 @@
+Version 1.0.14.17
+  - Created an integrity check to make sure that the program is up to date
+  - Created an updater so you can update the program from the program itself
+  - Created an update flag that will update the program
+  - Added updater to the shell
+  - Edited checksum to reflect new data
+  - Bumped version number
+
 Version 1.0.13.16
   - Added more checks to SQLi scans
   - Updated SQLi scan to include the backend database type
