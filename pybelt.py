@@ -16,14 +16,13 @@ from lib.pointers import run_port_scan
 from lib.shell import pybelt_shell
 
 # Settings
-from lib.core.settings import BANNER
-from lib.core.settings import LEGAL_DISC
 from lib.core.settings import LOGGER
-from lib.core.settings import LONG_LEGAL_DISCLAIMER
 from lib.core.settings import VERSION_STRING
 from lib.core.settings import WORDLIST_LINKS
 from lib.core.settings import create_wordlist
 from lib.core.settings import hide_banner
+from lib.core.settings import integrity_check
+from lib.core.settings import update_pybelt
 
 
 if __name__ == '__main__':
@@ -49,6 +48,8 @@ if __name__ == '__main__':
                       help="Display the legal information")
     opts.add_argument('--version', action="store_true", dest="version",
                       help="Show the version number and exit")
+    opts.add_argument('--update', action="store_true", dest="update",
+                      help="Update the program to the latest version")
     opts.add_argument('--rand-wordlist', action="store_true", dest="random_wordlist",
                       help="Create a random wordlist to use for dictionary attacks"),
     opts.add_argument("--proxy", metavar="PROXY", dest="configProxy",
@@ -67,6 +68,8 @@ if __name__ == '__main__':
     hide_banner(hide=True if args.banner else False,
                 legal=True if args.legal else False) if args.version is False else hide_banner(hide=True)
 
+    integrity_check()
+
     try:
         if len(sys.argv) == 1:  # If you failed to provide an argument
             prompt = pybelt_shell.PybeltConsole()  # Launch the shell
@@ -78,9 +81,11 @@ if __name__ == '__main__':
             try:
                 prompt.cmdloop(LOGGER.info(info_message))
             except TypeError as e:
-                print e
                 LOGGER.info("Terminating session...")
                 exit(0)
+
+        if args.update is True:  # Update the program
+            update_pybelt()
 
         if args.version is True:  # Show the version number and exit
             hide_banner(hide=True)
