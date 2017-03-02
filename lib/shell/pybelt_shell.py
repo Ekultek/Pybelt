@@ -1,6 +1,7 @@
 from cmd import Cmd
 
 from lib.core.settings import TOOL_LIST
+from lib.core.settings import update_pybelt
 
 
 class PybeltConsole(Cmd):
@@ -80,6 +81,8 @@ class PybeltConsole(Cmd):
             run_proxy_finder()
         elif command.lower() == "-hh" or command.lower().startswith("help"):
             self.help_menu()
+        elif command.lower() == "-u" or command.lower().startswith("update"):
+            update_pybelt()
         else:
             print("{}".format(self.help_menu()))
 
