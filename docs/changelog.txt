@@ -1,3 +1,10 @@
+Version 1.0.15.18
+  - Minor updates in pointers.py
+  - Minor updates in pybelt.py
+  - Minor updates to sql_scan.py
+  - You are no longer forced to update the program to continue
+  - Bumped version number
+
 Version 1.0.14.17
   - Created an integrity check to make sure that the program is up to date
   - Created an updater so you can update the program from the program itself
