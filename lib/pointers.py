@@ -21,7 +21,7 @@ from lib.core.settings import URL_REGEX
 from lib.core.settings import RANDOM_USER_AGENT
 
 
-def run_sqli_scan(url, proxy=None, user_agent=False):
+def run_sqli_scan(url, proxy=None, user_agent=False, tamper=None):
     """ Pointer to run a SQLi Scan on a given URL """
     try:
         if QUERY_REGEX.match(url):
