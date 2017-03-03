@@ -41,6 +41,10 @@ if __name__ == '__main__':
                       help="Attempt to find some proxies automatically")
     opts.add_argument('-x', '--xss', metavar="URL", dest="xssScan",
                       help="Check if a URL is vulnerable to XSS")
+    opts.add_argument('--sql-list', metavar="FILE", dest="sqliList",
+                      help="Pass a file path with URLS to scan for SQLi vulnerabilities")
+    opts.add_argument('--xss-list', metavar="FILE", dest="xssList",
+                      help="Pass a file path with URLS to scan for XSS vulnerabilities")
 
     opts.add_argument("--proxy", metavar="PROXY", dest="configProxy",
                       help="Configure the program to use a proxy when connecting")
@@ -109,6 +113,9 @@ if __name__ == '__main__':
         if args.sqliscan is not None:  # SQLi scanning
             run_sqli_scan(args.sqliscan)
 
+        if args.sqliList is not None:  # SQLi file scanning
+            run_sqli_scan(None, url_file=args.sqliList)
+
         if args.dorkcheck is not None:  # Dork checker, check if your dork isn't shit
             run_dork_checker(args.dorkcheck)
 
@@ -120,6 +127,9 @@ if __name__ == '__main__':
 
         if args.xssScan is not None:  # Scan a URL for XSS vulnerabilities
             run_xss_scan(args.xssScan, args.configProxy, args.randomUserAgent)
+
+        if args.xssList is not None:  # Run a through a file list for XSS vulns
+            run_xss_scan(None, url_file=args.xssList)
 
     except KeyboardInterrupt:  # Why you abort me?! :c
         LOGGER.error("User aborted.")
