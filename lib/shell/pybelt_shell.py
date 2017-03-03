@@ -83,6 +83,14 @@ class PybeltConsole(Cmd):
             self.help_menu()
         elif command.lower() == "-u" or command.lower().startswith("update"):
             update_pybelt()
+        elif command.lower() == "-sf" or command.lower().startswith("sql list"):
+            from lib.pointers import run_sqli_scan
+            file_path = raw_input("Enter the full path the SQLi file: ")
+            run_sqli_scan(None, url_file=file_path)
+        elif command.lower() == "-xf" or command.lower().startswith("xss file"):
+            from lib.pointers import run_xss_scan
+            file_path = raw_input("Enter the fulle path to the XSS file: ")
+            run_xss_scan(None, url_file=file_path)
         elif command.lower() == "quit":
             self.do_quit(None)
         else:
