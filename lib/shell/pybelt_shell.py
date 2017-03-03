@@ -83,6 +83,8 @@ class PybeltConsole(Cmd):
             self.help_menu()
         elif command.lower() == "-u" or command.lower().startswith("update"):
             update_pybelt()
+        elif command.lower() == "quit":
+            self.do_quit(None)
         else:
             print("{}".format(self.help_menu()))
 
