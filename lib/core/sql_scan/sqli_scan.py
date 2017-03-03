@@ -12,10 +12,11 @@ class SQLiScanner(object):
 
     vulnerable = False
 
-    def __init__(self, url, proxy=None, agent=None):
+    def __init__(self, url, proxy=None, agent=None, tamper=None):
         self.url = url
         self.proxy = proxy  # Only HTTP proxy for now
         self.agent = agent
+        self.tamper = tamper
         self.int = random.randint(1, 13)
         self.error_syntax = ["'", "--", ';', '"', "/*", "'/*", "'--", '"--', "';", '";', '`',
                              " AND {int}={int}".format(int=self.int),
