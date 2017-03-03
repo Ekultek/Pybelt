@@ -1,3 +1,14 @@
+Version 1.0.6.19
+  - Created a SQLi file scanning flag, pass a full file path to run through
+    a file list and scan for SQL injection vulnerabilities
+  - Created a XSS file scanning flag, pass a full file path to run through
+    the list and check for XSS vulns
+  - Updated the pointers.py to reflect the file scanning
+  - Edited the settings TOOL_LIST to have an option for both the new flags
+    with secondary option as well
+  - Updated the shell to include the new options
+  - Bumped version number
+
 Version 1.0.15.18
   - Minor updates in pointers.py
   - Minor updates in pybelt.py
