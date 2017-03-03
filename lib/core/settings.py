@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.14.17"
+VERSION = "1.0.15.18"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -288,10 +288,12 @@ def integrity_check(url=MD5_CHECKSUM_URL):
     if open("{}\\docs\\checksum.md5".format(PATH)).read() == urllib2.urlopen(url).read():
         pass
     else:
-        checksum_fail = "Integrity check failed.."
+        checksum_fail = "MD5 sums did not match from origin master, "
+        checksum_fail += "integrity check has failed, this could be because "
+        checksum_fail += "there is a new version available."
         LOGGER.fatal(checksum_fail)
         update = prompt("Would you like to update to the latest version[y/N]: ")
         if update.upper().startswith("Y"):
             update_pybelt()
         else:
-            exit(1)
+            pass
