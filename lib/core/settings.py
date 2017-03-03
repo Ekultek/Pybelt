@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.15.18"
+VERSION = "1.0.16.19"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -218,7 +218,9 @@ TOOL_LIST = {
     "-d": ["(Do a dork check to verify if your dork is good)", "dork"],
     "-f": ["(Find usable proxies)", "proxy"],
     "-u": ["(Update the program)", "update"],
-    "-hh": ["(Produce a help menu with basic descriptions)", "help"]
+    "-hh": ["(Produce a help menu with basic descriptions)", "help"],
+    "-sf": ["(Provide a file path to search for SQL injection)", "sql list"],
+    "-xf": ["(Provide a file path to search for XSS vulns)", "xss file"]
 }
 
 
