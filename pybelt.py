@@ -42,6 +42,8 @@ if __name__ == '__main__':
     opts.add_argument('-x', '--xss', metavar="URL", dest="xssScan",
                       help="Check if a URL is vulnerable to XSS")
 
+    opts.add_argument("--proxy", metavar="PROXY", dest="configProxy",
+                      help="Configure the program to use a proxy when connecting")
     opts.add_argument('--banner', action="store_true", dest="banner",
                       help="Hide the banner")
     opts.add_argument('-l', '--legal', action="store_true", dest="legal",
@@ -52,8 +54,6 @@ if __name__ == '__main__':
                       help="Update the program to the latest version")
     opts.add_argument('--rand-wordlist', action="store_true", dest="random_wordlist",
                       help="Create a random wordlist to use for dictionary attacks"),
-    opts.add_argument("--proxy", metavar="PROXY", dest="configProxy",
-                      help="Configure the program to use a proxy when connecting")
     opts.add_argument('--rand-agent', action="store_true", dest="randomUserAgent",
                       help="Use a random user agent from a file list")
 
@@ -63,11 +63,14 @@ if __name__ == '__main__':
                       help=argparse.SUPPRESS)
     opts.add_argument('--dork-list', metavar="FILE", dest="dorkList",
                       help=argparse.SUPPRESS)
+    opts.add_argument('--tamper', metavar="SCRIPT", dest="tamper",
+                      help=argparse.SUPPRESS)
     args = opts.parse_args()
 
     hide_banner(hide=True if args.banner else False,
                 legal=True if args.legal else False) if args.version is False else hide_banner(hide=True)
 
+    LOGGER.info("Checking program integrity..")
     integrity_check()
 
     try:
