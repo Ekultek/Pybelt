@@ -12,7 +12,7 @@ class SQLiScanner(object):
 
     vulnerable = False
 
-    def __init__(self, url, proxy=None, agent=None, tamper=None):
+    def __init__(self, url, proxy=None, agent=None, tamper=False):
         self.url = url
         self.proxy = proxy  # Only HTTP proxy for now
         self.agent = agent
