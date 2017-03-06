@@ -51,14 +51,14 @@ class SQLiScanner(object):
         while self.vulnerable is not True:
             for url in self.add_injection_syntax_to_url():
                 query = self.obtain_inject_query(url)
-                data = urllib2.urlopen(url).read()
+                data = urllib2.urlopen(url, timeout=5).read()
                 soup = [BeautifulSoup(data, 'html.parser')]
                 for html in soup:
                     for regex in SQLI_ERROR_REGEX.keys():
                         if regex.findall(str(html)):
                             self.vulnerable = True
-                            sqli_info = "'%s' appears to be vulnerable to SQL injection " % self.url
-                            sqli_info += "at (%s). The backend DBMS appears to be: %s." % (query, SQLI_ERROR_REGEX[regex])
+                            sqli_info = "'{}' appears to be vulnerable to SQL injection ".format(self.url)
+                            sqli_info += "at ({}). The backend DBMS appears to be: {}.".format(query, SQLI_ERROR_REGEX[regex])
                             return sqli_info
         if self.vulnerable is False:
             return "%s is not vulnerable to SQL injection." % self.url
