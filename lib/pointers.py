@@ -1,6 +1,8 @@
 import re
+import urllib2
 import socket
 from urllib2 import HTTPError
+from requests.exceptions import ConnectionError
 
 # Libraries
 from lib.core.dork_check import DorkScanner
@@ -24,38 +26,46 @@ from lib.core.settings import prompt
 
 def run_sqli_scan(url, url_file=None, proxy=None, user_agent=False, tamper=None):
     """ Pointer to run a SQLi Scan on a given URL """
-    error_message = "URL: '{}' threw an exception ".format(url)
+    error_message = "URL: '{}' threw an exception {} "
     error_message += "and Pybelt is unable to resolve the URL, "
     error_message += "this could mean that the URL is not allowing connections "
     error_message += "or that the URL is bad. Attempt to connect "
     error_message += "to the URL manually, if a connection occurs "
     error_message += "make an issue."
-
     if url_file is not None:  # Run through a file list
         file_path = url_file
-        total = len(open(file_path).readlines())
         done = 0
-        LOGGER.info("Found a total of {} urls in file {}..".format(total, file_path))
-        with open(file_path) as urls:
-            for url in urls.readlines():
-                try:
-                    if QUERY_REGEX.match(url.strip()):
-                        question = prompt("Would you like to scan '{}' for SQLi vulnerabilities[y/N]: ".format(
-                            url.strip()
-                        ))
-                        if question.lower().startswith("y"):
-                            LOGGER.info("Starting scan on url: '{}'".format(url.strip()))
-                            LOGGER.info(SQLiScanner(url.strip()).sqli_search())
-                            done += 1
-                            LOGGER.info("URLS scanned: {}, URLS left: {}".format(done, total - done))
+        try:
+            total = len(open(file_path).readlines())
+            LOGGER.info("Found a total of {} urls in file {}..".format(total, file_path))
+            with open(file_path) as urls:
+                for url in urls.readlines():
+                        if QUERY_REGEX.match(url.strip()):
+                            question = prompt("Would you like to scan '{}' for SQLi vulnerabilities[y/N]: ".format(
+                                url.strip()
+                            ))
+                            if question.lower().startswith("y"):
+                                LOGGER.info("Starting scan on url: '{}'".format(url.strip()))
+                                try:
+                                    LOGGER.info(SQLiScanner(url.strip()).sqli_search())
+                                    done += 1
+                                    LOGGER.info("URLS scanned: {}, URLS left: {}".format(done, total - done))
+                                except urllib2.URLError:
+                                    done += 1
+                                    LOGGER.warning("{} did not respond, skipping..".format(url.strip()))
+                            else:
+                                done += 1
+                                pass
                         else:
+                            done += 1
+                            LOGGER.warn("URL '{}' does not contain a query (GET) parameter, skipping..".format(url.strip()))
                             pass
-                    else:
-                        LOGGER.warn("URL '{}' does not contain a query (GET) parameter, skipping..".format(url.strip()))
-                        pass
-                except HTTPError:
-                    LOGGER.fatal(error_message)
-        LOGGER.info("No more URLS found in file, shutting down..")
+            LOGGER.info("No more URLS found in file, shutting down..")
+        except HTTPError as e:
+            LOGGER.fatal(error_message.format(url.strip(), e))
+        except IOError as e:
+            print e
+            LOGGER.fatal("That file does not exist, verify path and try again.")
 
     else:  # Run a single URL
         try:
@@ -64,8 +74,8 @@ def run_sqli_scan(url, url_file=None, proxy=None, user_agent=False, tamper=None)
                 LOGGER.info(SQLiScanner(url).sqli_search())
             else:
                 LOGGER.error("URL does not contain a query (GET) parameter. Example: http://example.com/php?id=2")
-        except HTTPError:
-            LOGGER.fatal(error_message)
+        except HTTPError as e:
+            LOGGER.fatal(error_message.format(url, e))
 
 
 def run_xss_scan(url, url_file=None, proxy=None, user_agent=False):
@@ -79,25 +89,35 @@ def run_xss_scan(url, url_file=None, proxy=None, user_agent=False):
 
     if url_file is not None:  # Scan a given file full of URLS
         file_path = url_file
-        total = len(open(url_file).readlines())
         done = 0
-        LOGGER.info("Found a total of {} URLS to scan..".format(total))
-        with open(file_path) as urls:
-            for url in urls.readlines():
-                if QUERY_REGEX.match(url.strip()):
-                    question = prompt("Would you like to scan '{}' for XSS vulnerabilities[y/N]: ".format(url.strip()))
-                    if question.lower().startswith("y"):
-                        done += 1
-                        if not xss.main(url.strip(), proxy=proxy, headers=header):
-                            LOGGER.info("URL '{}' does not appear to be vulnerable to XSS".format(url.strip()))
+        try:
+            total = len(open(url_file).readlines())
+            LOGGER.info("Found a total of {} URLS to scan..".format(total))
+            with open(file_path) as urls:
+                for url in urls.readlines():
+                    if QUERY_REGEX.match(url.strip()):
+                        question = prompt("Would you like to scan '{}' for XSS vulnerabilities[y/N]: ".format(url.strip()))
+                        if question.lower().startswith("y"):
+                            done += 1
+
+                            try:
+                                if not xss.main(url.strip(), proxy=proxy, headers=header):
+                                    LOGGER.info("URL '{}' does not appear to be vulnerable to XSS".format(url.strip()))
+                                else:
+                                    LOGGER.info("URL '{}' appears to be vulnerable to XSS".format(url.strip()))
+                            except ConnectionError:
+                                LOGGER.warning("{} failed to respond, skipping..".format(url.strip()))
+
+                            LOGGER.info("URLS scanned: {}, URLS left: {}".format(done, total - done))
                         else:
-                            LOGGER.info("URL '{}' appears to be vulnerable to XSS".format(url.strip()))
-                        LOGGER.info("URLS scanned: {}, URLS left: {}".format(done, total - done))
+                            done += 1
+                            pass
                     else:
-                        pass
-                else:
-                    LOGGER.warn("URL '{}' does not contain a query (GET) parameter, skipping".format(url.strip()))
-        LOGGER.info("All URLS in file have been scanned, shutting down..")
+                        done += 1
+                        LOGGER.warn("URL '{}' does not contain a query (GET) parameter, skipping..".format(url.strip()))
+            LOGGER.info("All URLS in file have been scanned, shutting down..")
+        except IOError:
+            LOGGER.fatal("That file does not exist, verify path and try again.")
 
     else:  # Scan a single URL
         if QUERY_REGEX.match(url):
@@ -159,8 +179,25 @@ def run_hash_cracker(hash_to_crack, hash_file=None):
 
 def run_hash_verification(hash_to_verify, hash_ver_file=None):
     """ Pointer to run the Hash Verification system"""
-    LOGGER.info("Analyzing hash: '{}'".format(hash_to_verify))
-    HashChecker(hash_to_verify).obtain_hash_type()
+    if hash_ver_file is not None and hash_to_verify is None:
+        try:
+            total = len(open(hash_ver_file).readlines())
+            LOGGER.info("Found a total of {} hashes in file..".format(total))
+        except IOError:
+            LOGGER.critical("That file does not exist, check path and try again.")
+
+        with open(hash_ver_file, "r+") as hashes:
+            for h in hashes.readlines():
+                question = prompt("Attempt to verify '{}'[y/N]: ".format(h.strip()))
+                if question.startswith("y"):
+                    LOGGER.info("Analyzing hash: '{}'".format(h.strip()))
+                    HashChecker(h.strip()).obtain_hash_type()
+                    print("\n")
+                else:
+                    LOGGER.warning("Skipping '{}'..".format(h.strip()))
+    else:
+        LOGGER.info("Analyzing hash: '{}'".format(hash_to_verify))
+        HashChecker(hash_to_verify).obtain_hash_type()
 
 
 def run_dork_checker(dork, dork_file=None):
