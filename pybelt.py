@@ -41,10 +41,12 @@ if __name__ == '__main__':
                       help="Attempt to find some proxies automatically")
     opts.add_argument('-x', '--xss', metavar="URL", dest="xssScan",
                       help="Check if a URL is vulnerable to XSS")
-    opts.add_argument('--sql-list', metavar="FILE", dest="sqliList",
+    opts.add_argument('-sl', '--sql-list', metavar="FILE", dest="sqliList",
                       help="Pass a file path with URLS to scan for SQLi vulnerabilities")
-    opts.add_argument('--xss-list', metavar="FILE", dest="xssList",
+    opts.add_argument('-xl', '--xss-list', metavar="FILE", dest="xssList",
                       help="Pass a file path with URLS to scan for XSS vulnerabilities")
+    opts.add_argument('-vhl', '--verify-hash-list', metavar="FILE", dest="verifyHashFile",
+                      help="Pass a file of hashes to verify the has type of each hash")
 
     opts.add_argument("--proxy", metavar="PROXY", dest="configProxy",
                       help="Configure the program to use a proxy when connecting")
@@ -109,6 +111,9 @@ if __name__ == '__main__':
 
         if args.hashcheck is not None:  # Check what hash type you have
             run_hash_verification(args.hashcheck)
+
+        if args.verifyHashFile is not None:
+            run_hash_verification(None, hash_ver_file=args.verifyHashFile)
 
         if args.sqliscan is not None:  # SQLi scanning
             run_sqli_scan(args.sqliscan)
