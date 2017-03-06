@@ -1,3 +1,13 @@
+Version 1.0.7.20
+  - Created a flag for verifying a hash list
+  - Updated SQLi and XSS list scans
+  - Updated TOOL_LIST to verify new tool
+  - Added timeout to SQLi scan,it won't just sit there anymore
+  - Updated pointers.py to provide scan file for hash verification
+  - SQLi list flag changed to -sl
+  - XSS list flag changed to -xl
+  - Bumped version number
+
 Version 1.0.6.19
   - Created a SQLi file scanning flag, pass a full file path to run through
     a file list and scan for SQL injection vulnerabilities
