@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.17.20"
+VERSION = "1.0.18.21"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -106,7 +106,9 @@ SQLI_ERROR_REGEX = {
 SYNTAX_REGEX = re.compile(r"\W+$")
 
 # Regex to match an IP address
-IP_ADDRESS_REGEX = re.compile(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
+IP_ADDRESS_REGEX = re.compile(r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|"
+                              r"25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|"
+                              r"2[0-4][0-9]|25[0-5])$")
 
 # Regex to match any given URL
 URL_REGEX = re.compile(
@@ -300,3 +302,18 @@ def integrity_check(url=MD5_CHECKSUM_URL):
             update_pybelt()
         else:
             pass
+
+
+def replace_http(url):
+    """ Replace the http/https in a URL with www.
+    >>> replace_http("http://google.com")
+    www.google.com """
+    data_regex = re.compile(r"^https?://")
+    if data_regex.match(url) and "www." not in url:
+        data = url.split("//")
+        data[0] = "www."
+        return ''.join(data)
+    elif "www." in url:
+        return url.split("//")[1]
+    else:
+        return url
