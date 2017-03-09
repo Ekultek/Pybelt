@@ -19,7 +19,7 @@ class PortScanner(object):
         try:
             # Calling the thread class
             rst = RunScanThread(self.host)
-            t2 = threading.Thread(target=(rst.run_scan))
+            t2 = threading.Thread(target=rst.run_scan)
             t2.start()
         except Exception, e:
             LOGGER.error(e)
@@ -62,5 +62,6 @@ class RunScanThread(PortScanner):
         q.join()
 
         stop_time = time.time()
+        no_ports = "\033[91mNo ports available or open\033[0m"
         LOGGER.info("Completed in {} seconds".format(str(stop_time - start_time)))
-        LOGGER.info("Ports readily available: {}".format(''.join(str(self.connection_made))))
+        LOGGER.info("Ports readily available: {}".format(''.join(str(self.connection_made if self.connection_made is not "" else no_ports))))
