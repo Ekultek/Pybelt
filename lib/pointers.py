@@ -22,6 +22,7 @@ from lib.core.settings import QUERY_REGEX
 from lib.core.settings import URL_REGEX
 from lib.core.settings import RANDOM_USER_AGENT
 from lib.core.settings import prompt
+from lib.core.settings import replace_http
 
 
 def run_sqli_scan(url, url_file=None, proxy=None, user_agent=False, tamper=None):
@@ -138,11 +139,11 @@ def run_port_scan(host):
     """ Pointer to run a Port Scan on a given host """
     if re.search(IP_ADDRESS_REGEX, host) is not None:
         LOGGER.info("Starting port scan on IP: {}".format(host))
-        LOGGER.info(PortScanner(host).connect_to_host())
+        PortScanner(host).connect_to_host()
     elif re.search(URL_REGEX, host) is not None and re.search(QUERY_REGEX, host) is None:
         try:
             LOGGER.info("Fetching resolve IP...")
-            ip_address = socket.gethostbyname(host)
+            ip_address = socket.gethostbyname(replace_http(host))
             LOGGER.info("Done! IP: {}".format(ip_address))
             LOGGER.info("Starting scan on URL: {} IP: {}".format(host, ip_address))
             PortScanner(ip_address).connect_to_host()
@@ -157,7 +158,9 @@ def run_port_scan(host):
     else:
         error_message = "You need to provide a host to scan,"
         error_message += " this can be given in the form of a URL "
-        error_message += "or a IP address."
+        error_message += "or a IP address. Dropping the query (GET) "
+        error_message += "of the URL may resolve this problem, or "
+        error_message += "verify that the IP is real"
         LOGGER.fatal(error_message)
 
 
