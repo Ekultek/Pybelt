@@ -1,3 +1,13 @@
+Version 1.0.8.21
+  - Updated the port scanner to not display "None" if there are no
+    ports available it will display, No ports available or open
+  - Created a function that will auto format a URL to it's basic format
+    for port scanning, for example: http://google.com -> www.google.com
+  - Updated the IP regex to not provide false positive
+  - Updated integrity_check so that if it fails it will warn you that
+    you are running a non-verified version and ask you to continue
+  - Bumped version number
+
 Version 1.0.7.20
   - Created a flag for verifying a hash list
   - Updated SQLi and XSS list scans
