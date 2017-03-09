@@ -2,6 +2,7 @@ import argparse
 import random
 import sys
 import getpass
+from urllib2 import HTTPError
 
 # Pointers
 from lib.pointers import run_proxy_finder
@@ -19,10 +20,12 @@ from lib.shell import pybelt_shell
 from lib.core.settings import LOGGER
 from lib.core.settings import VERSION_STRING
 from lib.core.settings import WORDLIST_LINKS
+from lib.core.settings import CLONE_LINK
 from lib.core.settings import create_wordlist
 from lib.core.settings import hide_banner
 from lib.core.settings import integrity_check
 from lib.core.settings import update_pybelt
+from lib.core.settings import prompt
 
 
 if __name__ == '__main__':
@@ -77,7 +80,23 @@ if __name__ == '__main__':
                 legal=True if args.legal else False) if args.version is False else hide_banner(hide=True)
 
     LOGGER.info("Checking program integrity..")
-    integrity_check()
+
+    try:
+        integrity_check()
+    except HTTPError:
+        check_fail = "Integrity check failed to connect "
+        check_fail += "you are running a non verified "
+        check_fail += "Pybelt, this may or may not be insecure. "
+        check_fail += "Suggestion would be to re-download Pybelt from "
+        check_fail += "{}"
+        LOGGER.error(check_fail.format(CLONE_LINK))
+        answer = prompt("Would you like to continue anyways[y/N] ")
+        if answer.upper().startswith("Y"):
+            pass
+        else:
+            err_msg = "Please download the latest version from "
+            err_msg += "{}"
+            LOGGER.critical(err_msg.format(CLONE_LINK))
 
     try:
         if len(sys.argv) == 1:  # If you failed to provide an argument
