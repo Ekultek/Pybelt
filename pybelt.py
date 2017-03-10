@@ -47,7 +47,9 @@ if __name__ == '__main__':
     opts.add_argument('-sl', '--sql-list', metavar="FILE", dest="sqliList",
                       help="Pass a file path with URLS to scan for SQLi vulnerabilities")
     opts.add_argument('-xl', '--xss-list', metavar="FILE", dest="xssList",
-                      help="Pass a file path with URLS to scan for XSS vulnerabilities")
+                      help="Pass a file path with URLS to scan for XSS vulnerabilities"),
+    opts.add_argument('-dl', '--dork-list', metavar="FILE", dest="dorkList",
+                      help="Pass a file containing dorks to search check"),
     opts.add_argument('-vhl', '--verify-hash-list', metavar="FILE", dest="verifyHashFile",
                       help="Pass a file of hashes to verify the has type of each hash")
 
@@ -69,8 +71,6 @@ if __name__ == '__main__':
     opts.add_argument('--anon', metavar="ANON", dest="anonLvl",
                       help=argparse.SUPPRESS)
     opts.add_argument('--hash-list', metavar="FILE", dest="hashList",
-                      help=argparse.SUPPRESS)
-    opts.add_argument('--dork-list', metavar="FILE", dest="dorkList",
                       help=argparse.SUPPRESS)
     opts.add_argument('--tamper', metavar="SCRIPT", dest="tamper",
                       help=argparse.SUPPRESS)
@@ -141,7 +141,10 @@ if __name__ == '__main__':
             run_sqli_scan(None, url_file=args.sqliList)
 
         if args.dorkcheck is not None:  # Dork checker, check if your dork isn't shit
-            run_dork_checker(args.dorkcheck)
+            run_dork_checker(args.dorkcheck, dork_file=args.dorkList, proxy=args.configProxy)
+
+        if args.dorkList is not None:
+            run_dork_checker(None, dork_file=args.dorkList, proxy=args.configProxy)
 
         if args.hash is not None:  # Try and crack a hash
             run_hash_cracker(args.hash)
