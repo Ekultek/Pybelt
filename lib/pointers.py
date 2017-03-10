@@ -1,6 +1,7 @@
 import re
 import urllib2
 import socket
+import subprocess
 from urllib2 import HTTPError
 from requests.exceptions import ConnectionError
 
@@ -203,13 +204,34 @@ def run_hash_verification(hash_to_verify, hash_ver_file=None):
         HashChecker(hash_to_verify).obtain_hash_type()
 
 
-def run_dork_checker(dork, dork_file=None):
+def run_dork_checker(dork, dork_file=None, proxy=None):
     """ Pointer to run a Dork Check on a given Google Dork """
-    LOGGER.info("Starting dork scan, using query: '{}'..".format(dork))
-    try:
-        LOGGER.info(DorkScanner(dork).check_urls_for_queries())
-    except HTTPError:
-        LOGGER.fatal(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
+    if dork is not None:
+        LOGGER.info("Starting dork scan, using query: '{}'..".format(dork))
+        try:
+            LOGGER.info(DorkScanner(dork, dork_file=dork_file, proxy=proxy).check_urls_for_queries())
+        except HTTPError:
+            LOGGER.fatal(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
+    elif dork is None and dork_file is not None:
+        if proxy is None:
+            proxy_warn = "It is advised to use proxies while running "
+            proxy_warn += "a dork list due to the temporary Google "
+            proxy_warn += "bans.."
+            LOGGER.warning(proxy_warn)
+            question = prompt("Would you like to find proxies with the built in finder first[y/N]: ")
+            if question.upper().startswith("Y"):
+                subprocess.call(["python", "pybelt.py", "-f"])
+            else:
+                pass
+        try:
+            with open("{}".format(dork_file)) as dork_list:
+                for dork in dork_list.readlines():
+                    LOGGER.info("Starting dork scan on {}..".format(dork.strip()))
+                    LOGGER.info(DorkScanner(dork, dork_file=dork_file, proxy=proxy).check_urls_for_queries())
+        except HTTPError:
+            LOGGER.fatal(GoogleBlockException(GOOGLE_TEMP_BLOCK_ERROR_MESSAGE))
+        except IOError:
+            LOGGER.fatal("The filename {} does not exist, please verify path and try again".format(dork_file))
 
 
 def run_proxy_finder():
