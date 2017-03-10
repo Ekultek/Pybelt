@@ -89,16 +89,25 @@ class PybeltConsole(Cmd):
             update_pybelt()
         elif command.lower() == "-sl" or command.lower().startswith("sql list"):
             from lib.pointers import run_sqli_scan
-            file_path = raw_input("Enter the full path the SQLi file: ")
+            file_path = raw_input("Enter the full path to the SQLi file: ")
             run_sqli_scan(None, url_file=file_path)
         elif command.lower() == "-xl" or command.lower().startswith("xss file"):
             from lib.pointers import run_xss_scan
-            file_path = raw_input("Enter the fulle path to the XSS file: ")
+            file_path = raw_input("Enter the full path to the XSS file: ")
             run_xss_scan(None, url_file=file_path)
         elif command.lower() == "-vhl" or command.lower().startswith("verify hash list"):
             from lib.pointers import run_hash_verification
             hash_file = raw_input("Enter full path of hash file: ")
             run_hash_verification(None, hash_file)
+        elif command.lower == "-dl" or command.lower().startswith("dork list"):
+            from lib.pointers import run_dork_checker
+            dork_file_path = raw_input("Enter full path to dork file: ")
+            proxy = raw_input("Enter a proxy (enter for none): ")
+            if proxy is "":
+                proxy = None
+            else:
+                proxy = proxy
+            run_dork_checker(None, dork_file=dork_file_path, proxy=proxy)
         elif command.lower() == "quit":
             self.do_quit(None)
         else:
