@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.18.21"
+VERSION = "1.0.19.22"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -223,6 +223,7 @@ TOOL_LIST = {
     "-hh": ["(Produce a help menu with basic descriptions)", "help"],
     "-sl": ["(Provide a file path to search for SQL injection)", "sql list"],
     "-xl": ["(Provide a file path to search for XSS vulns)", "xss file"],
+    "-dl": ["(Provide a file path of dorks to scan", "dork list"],
     "-vhl": ["(Provide a file of hashes to verify the types", "v hash list"]
 }
 
