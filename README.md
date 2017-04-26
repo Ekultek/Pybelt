@@ -1,4 +1,4 @@
-#Pybelt
+# Pybelt
 
 Pybelt is an open source hackers tool belt complete with:
 
@@ -12,7 +12,7 @@ Pybelt is an open source hackers tool belt complete with:
  
 It is capable of cracking hashes without prior knowledge of the algorithm, scanning ports on a given host, searching for SQLi vulnerabilities in a given URL, verifying that your Google dorks work like they should, verifying the algorithm of a given hash, scanning a URL for XSS vulnerability, and finding usable HTTP proxies.
 
-##ScreenShots
+## Screenshots
 SQL Injection scanning made easy, just provide a URL and watch it work
 ![sqli](https://s29.postimg.org/vgufri8uf/sqli_scan.png)
 
@@ -24,9 +24,9 @@ Hash cracking made simple, provide the hash type at the end ":md5, :sha256, etc"
 
 And many more!
 
-##Usage
+## Usage
 
-###Installation
+### Installation
 You can either clone the repository 
 `git clone https://github.com/ekultek/pybelt.git`
 or download the latest release as a zip/tar ball [here](https://github.com/Ekultek/PyBelt/releases/tag/1.0)
@@ -51,5 +51,5 @@ This will install all of the programs needed libraries and should be able to be 
 
 `python pybelt.py -x http://127.0.0.1/php?id=1` Will search the URL for XSS vulnerability
 
-###License
+### License
 This program is licensed under the MIT license, you can the license in the DOCS folder
