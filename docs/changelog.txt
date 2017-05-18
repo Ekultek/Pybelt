@@ -1,3 +1,7 @@
+Version 1.0.10.23
+  - Edited the paths to match for Linux
+  - Bumped version number
+
 Version 1.0.9.22
   - Updated the dork scanner to be able to run through a file list
   - Updated dork scanner to be able to configure a proxy

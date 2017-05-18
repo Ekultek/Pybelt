@@ -49,13 +49,13 @@ class DorkScanner(object):
         filename = settings.create_random_filename()
         LOGGER.info("File being saved to: {}.txt".format(filename))
         create_dir(settings.DORK_SCAN_RESULTS_PATH)
-        with open("{}\\{}.txt".format(settings.DORK_SCAN_RESULTS_PATH, filename), "a+") as results:
+        with open("{}/{}.txt".format(settings.DORK_SCAN_RESULTS_PATH, filename), "a+") as results:
             for url in self.connect_to_search_engine():
                 match = settings.QUERY_REGEX.match(url)  # Match by regex for anything that has a ?<PARAM>= in it
                 if match:
                     results.write(url + "\n")
-        amount_of_urls = len(open(settings.DORK_SCAN_RESULTS_PATH + "\\" + filename + ".txt", 'r').readlines())
+        amount_of_urls = len(open(settings.DORK_SCAN_RESULTS_PATH + "//" + filename + ".txt", 'r').readlines())
         success_rate = ((amount_of_urls // 10) + 1) * 10
-        return "Found a total of {} usable links with query (GET) parameters, urls have been saved to {}\\{}.txt. " \
+        return "Found a total of {} usable links with query (GET) parameters, urls have been saved to {}//{}.txt. " \
                "This Dork has a success rate of {}%".format(amount_of_urls, settings.DORK_SCAN_RESULTS_PATH, filename,
                                                             success_rate)

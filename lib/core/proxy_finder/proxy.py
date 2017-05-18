@@ -56,7 +56,7 @@ def attempt_to_connect_to_proxies():
     LOGGER.info("Found a total of {} proxies.".format(len(results)))
     filename = create_random_filename()
     create_dir(PROXY_SCAN_RESULTS)
-    with open(PROXY_SCAN_RESULTS + "\\" + filename + ".txt", "a+") as res:
+    with open(PROXY_SCAN_RESULTS + "/" + filename + ".txt", "a+") as res:
         for prox in results:
             res.write(prox + "\n")
-    LOGGER.info("Results saved to: {}".format(PROXY_SCAN_RESULTS + "\\" + filename + ".txt"))
+    LOGGER.info("Results saved to: {}".format(PROXY_SCAN_RESULTS + "/" + filename + ".txt"))
