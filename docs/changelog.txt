@@ -1,3 +1,7 @@
+Version 1.0.11.24
+  - Hot fix for issue #6 https://github.com/Ekultek/Pybelt/issues/6
+  - Bumped version number
+
 Version 1.0.10.23
   - Edited the paths to match for Linux
   - Bumped version number

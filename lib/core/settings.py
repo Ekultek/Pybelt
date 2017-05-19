@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.20.23"
+VERSION = "1.0.11.24"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -291,7 +291,7 @@ def update_pybelt():
 
 def integrity_check(url=MD5_CHECKSUM_URL):
     """ Check the integrity of the application """
-    if open("{}\\docs\\checksum.md5".format(PATH)).read() == urllib2.urlopen(url).read():
+    if open("{}/docs/checksum.md5".format(PATH)).read() == urllib2.urlopen(url).read():
         pass
     else:
         checksum_fail = "MD5 sums did not match from origin master, "
