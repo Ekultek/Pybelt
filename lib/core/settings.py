@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.11.25"
+VERSION = "1.0.12.26"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -182,19 +182,21 @@ RESERVED_PORTS = {
     1: "TCP", 5: "RDP (TCP/UDP)", 7: "Echo (TCP/UDP)", 18: "Message Protocol (MSP)",
     20: "FTP (TCP/UDP/SCTP)", 21: "FTP (TCP/UDP/SCTP)", 22: "SSH (TCP/UDP/SCTP)",
     23: "Telnet (TCP/UDP)", 25: "SMTP (TCP/UDP)", 29: "MSG-ICP (TCP/UDP)",
-    37: "Time (TCP/UDP)", 42: "Name/Nameserver (TCP/UDP)", 43: "WHOIS (TCP/UDP)",
+    37: "Time (TCP/UDP)", 42: "WINS [Nameserver] (TCP/UDP)", 43: "WHOIS (TCP/UDP)",
     49: "TACACS (TCP/UDP)", 53: "DNS (TCP/UDP)", 69: "TFT (TCP/UDP)",
     70: "Gopher (TCP/UDP)", 79: "Finger (TCP/UDP)", 80: "HTTP (TCP/UDP/SCTP)",
     103: "GPPTN (TCP/UDP)", 108: "SNAGAS (TCP/UDP)", 109: "POP2 (TCP/UDP)",
     110: "POP3 (TCP/UDP)", 115: "SFTP (TCP/UDP)", 118: "SQL Services (TCP/UDP)",
-    119: "NNTP (TCP/UDP)", 137: "NETBIOS-NS (TCP/UDP)", 139: "NETBIOS-SSN (TCP/UDP)",
+    119: "NNTP (TCP/UDP)", 135: "Windows RPC (UDP/TCP)", 137: "NETBIOS-NS (TCP/UDP)",
+    138: "NETBIOS over TCP (TCP/UDP)", 139: "NETBIOS-SSN (TCP/UDP)",
     143: "IMAP (TCP/UDP)", 150: "SQL-NET (TCP/UDP)", 156: "SQL Service (TCP/UDP)",
     161: "SNMP (TCP/UDP)", 179: "BGP (TCP/UDP/SCTP)", 190: "GACP (TCP/UDP)",
     194: "IRC (TCP/UDP)", 197: "DLS (TCP/UDP)", 389: "LDAP (TCP/UDP)",
     396: "Netware-IP (TCP/UDP)", 443: "HTTPS (TCP/UDP/SCTP)", 444: "SNPP (TCP/UDP)",
     445: "Microsoft-DS (TCP/UDP)", 458: "Apple Quick Time (TCP/UDP)", 546: "DHCPv6 (TCP/UDP)",
     547: "DHCPv6 (TCP/UDP)", 563: "NNTPS (TCP/UDP)", 569: "MS-Rome (TCP/UDP)",
-    1080: "Socks (TCP/UDP)"
+    1080: "Socks (TCP/UDP)", 1433: "MS SQL Server (TCP/UDP)", 1434: "MS SQL Server (TCP/UDP)",
+    9001: "TOR (TCP/UDP)"
 }
 
 # Links to some wordlists I have laying around
