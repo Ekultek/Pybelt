@@ -1,3 +1,8 @@
+Version 1.0.12.26
+  - Added a github issue template (last push)
+  - Added some more ports to the port scanner
+  - Bumped version number
+
 Version 1.0.11.24
   - Hot fix for issue #6 https://github.com/Ekultek/Pybelt/issues/6
   - Bumped version number
