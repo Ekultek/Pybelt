@@ -23,7 +23,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.11.24"
+VERSION = "1.0.11.25"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
