@@ -26,9 +26,11 @@ from lib.core.settings import hide_banner
 from lib.core.settings import integrity_check
 from lib.core.settings import update_pybelt
 from lib.core.settings import prompt
+from lib.core.settings import verify_py_version
 
 
 if __name__ == '__main__':
+
     opts = argparse.ArgumentParser()
     opts.add_argument('-d', '--dork-check', metavar='DORK', dest="dorkcheck",
                       help="Provide a Google dork to check for possible injectable sites")
@@ -82,6 +84,9 @@ if __name__ == '__main__':
     LOGGER.info("Checking program integrity..")
 
     try:
+        if not verify_py_version():
+            LOGGER.fatal("You must have Python version 2.7.x to run this program.")
+            exit(1)
         integrity_check()
     except HTTPError:
         check_fail = "Integrity check failed to connect "

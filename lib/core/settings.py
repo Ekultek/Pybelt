@@ -1,4 +1,5 @@
 import os
+import sys
 import uuid
 import re
 import logging
@@ -23,7 +24,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.12.26"
+VERSION = "1.0.12.27"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -36,8 +37,8 @@ VERSION_STRING = "\033[92m{}\033[0m(\033[{}m\033[1mdev\033[0m)".format(VERSION, 
 # Basic legal disclaimer
 LEGAL_DISC = "[!] legal disclaimer: This program is intended for learning purposes, any malicious intent is on you, " \
              "it is the end users responsibility to obey all laws, regulations, and rules of your respective country " \
-             "or place of origin. For further information about this please see the legal information file under lib/text_files " \
-             "or run the --legal flag"
+             "or place of origin. For further information about this please see the legal information file under " \
+             "lib/text_files or run the --legal flag"
 LONG_LEGAL_DISCLAIMER = open("lib/text_files/legal.txt").read()
 
 # Random saying to display on the banner
@@ -320,3 +321,12 @@ def replace_http(url):
         return url.split("//")[1]
     else:
         return url
+
+
+def verify_py_version():
+    version_tuple = sys.version_info
+    version = "{}.{}".format(version_tuple[0], version_tuple[1])
+    if version >= "2.7" <= "3.0":
+        return True
+    else:
+        return False

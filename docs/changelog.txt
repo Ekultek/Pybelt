@@ -1,3 +1,7 @@
+Version 1.0.12.27
+  - Created a version check, must have python 2.7.x to run the application
+  - Bumped version number
+
 Version 1.0.12.26
   - Added a github issue template (last push)
   - Added some more ports to the port scanner
