@@ -1,4 +1,4 @@
-** NOTE: This project is not frequently updated, bugs will be fixed, however, features will be limited **
+** NOTE: This project is no longer updated, this will be the last push to this project, if you would like more info, feel free to ping me on Twitter: [@stay__salty](https://twitter.com/stay__salty) **
 
 # Pybelt
 

@@ -67,5 +67,6 @@ class HashCracker(object):
                     hash_results += "\n%sPlain Text: %s" % (spacer, self.results[self.hash][0])
                     LOGGER.info(hash_results)
                     self.cracked = True
+            break
         return
 

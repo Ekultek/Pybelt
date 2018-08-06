@@ -18,13 +18,15 @@ class SQLiScanner(object):
         self.agent = agent
         self.tamper = tamper
         self.int = random.randint(1, 13)
-        self.error_syntax = ["'", "--", ';', '"', "/*", "'/*", "'--", '"--', "';", '";', '`',
-                             " AND {int}={int}".format(int=self.int),
-                             " OR {int}={int}".format(int=self.int),
-                             " OR NOT {int}={int}".format(int=self.int),
-                             " UNION FALSE {}".format(RANDOM_COMMON_COLUMN.strip()),
-                             " UNION {}".format(RANDOM_COMMON_COLUMN.strip()),
-                             " AND {int}=IF(({int})),SLEEP({int}),{int}".format(int=self.int)]
+        self.error_syntax = [
+            "'", "--", ';', '"', "/*", "'/*", "'--", '"--', "';", '";', '`',
+            " AND {int}={int}".format(int=self.int),
+            " OR {int}={int}".format(int=self.int),
+            " OR NOT {int}={int}".format(int=self.int),
+            " UNION FALSE {}".format(RANDOM_COMMON_COLUMN.strip()),
+            " UNION {}".format(RANDOM_COMMON_COLUMN.strip()),
+            " AND {int}=IF(({int})),SLEEP({int}),{int}".format(int=self.int)
+        ]
 
     @staticmethod
     def obtain_inject_query(url):
@@ -51,14 +53,19 @@ class SQLiScanner(object):
         while self.vulnerable is not True:
             for url in self.add_injection_syntax_to_url():
                 query = self.obtain_inject_query(url)
-                data = urllib2.urlopen(url, timeout=5).read()
-                soup = [BeautifulSoup(data, 'html.parser')]
-                for html in soup:
-                    for regex in SQLI_ERROR_REGEX.keys():
-                        if regex.findall(str(html)):
-                            self.vulnerable = True
-                            sqli_info = "'{}' appears to be vulnerable to SQL injection ".format(self.url)
-                            sqli_info += "at ({}). The backend DBMS appears to be: {}.".format(query, SQLI_ERROR_REGEX[regex])
-                            return sqli_info
+                try:
+                    data = urllib2.urlopen(url, timeout=5).read()
+                    soup = [BeautifulSoup(data, 'html.parser')]
+                    for html in soup:
+                        for regex in SQLI_ERROR_REGEX.keys():
+                            if regex.findall(str(html)):
+                                self.vulnerable = True
+                                sqli_info = "'{}' appears to be vulnerable to SQL injection ".format(self.url)
+                                sqli_info += "at ({}). The backend DBMS appears to be: {}.".format(
+                                    query, SQLI_ERROR_REGEX[regex]
+                                )
+                                return sqli_info
+                except:
+                    break
         if self.vulnerable is False:
-            return "%s is not vulnerable to SQL injection." % self.url
+            return "{} is not vulnerable to SQL injection.".format(self.url)

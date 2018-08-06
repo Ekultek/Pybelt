@@ -7,6 +7,7 @@ import random
 import time
 import urllib2
 import base64
+
 from colorlog import ColoredFormatter
 
 log_level = logging.INFO
@@ -24,7 +25,7 @@ LOGGER.addHandler(stream)
 PATH = os.getcwd()
 
 # Current version <major><minor><patch><commit>
-VERSION = "1.0.12.27"
+VERSION = "1.1"
 
 # Coloring for the version string
 TYPE_COLORS = {"dev": 33, "stable": 92}
@@ -42,12 +43,14 @@ LEGAL_DISC = "[!] legal disclaimer: This program is intended for learning purpos
 LONG_LEGAL_DISCLAIMER = open("lib/text_files/legal.txt").read()
 
 # Random saying to display on the banner
-SAYING = random.choice(["The Hackers ToolBelt..",
-                        "The Hackers Blackbelt..",
-                        "The Hackers Multi-Tool..",
-                        "The Hackers Gerber..",
-                        "The Hackers Best Friend..",
-                        "Hacking Made Easy.."])
+SAYING = random.choice([
+    "The Hackers ToolBelt..",
+    "The Hackers Blackbelt..",
+    "The Hackers Multi-Tool..",
+    "The Hackers Gerber..",
+    "The Hackers Best Friend..",
+    "Hacking Made Easy.."
+])
 
 # URLs to make the program work
 PROXY_URL = "http://proxy.tekbreak.com/100/json"

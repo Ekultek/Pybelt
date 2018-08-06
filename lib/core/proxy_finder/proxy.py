@@ -1,13 +1,17 @@
-import urllib2
 import json
 import time
 import socket
+import urllib2
+
 import httplib
-from lib.core.settings import PROXY_URL
-from lib.core.settings import LOGGER
-from lib.core.settings import PROXY_SCAN_RESULTS
-from lib.core.settings import create_random_filename
-from lib.core.settings import create_dir
+
+from lib.core.settings import (
+    PROXY_URL,
+    LOGGER,
+    PROXY_SCAN_RESULTS,
+    create_random_filename,
+    create_dir
+)
 
 
 def connect_and_pull_info():
@@ -16,9 +20,16 @@ def connect_and_pull_info():
     count = 0
     data = json.loads(urllib2.urlopen(PROXY_URL).read())
     for i in range(0, 60):
-        count += 1
-        results[count] = data[i]
-    LOGGER.info("Found {} possible proxies, moving to connection attempts..".format(len(results)))
+        try:
+            results[count] = data[i]
+            count += 1
+        except IndexError:
+            pass
+    amount = len(results)
+    if amount != 0:
+        LOGGER.info("Found {} possible proxies, moving to connection attempts..".format(len(results)))
+    else:
+        LOGGER.warning("No usable proxies discovered")
     return results
 
 
@@ -53,10 +64,14 @@ def attempt_to_connect_to_proxies():
                 pass
             except socket.error:
                 pass
-    LOGGER.info("Found a total of {} proxies.".format(len(results)))
-    filename = create_random_filename()
-    create_dir(PROXY_SCAN_RESULTS)
-    with open(PROXY_SCAN_RESULTS + "/" + filename + ".txt", "a+") as res:
-        for prox in results:
-            res.write(prox + "\n")
-    LOGGER.info("Results saved to: {}".format(PROXY_SCAN_RESULTS + "/" + filename + ".txt"))
+    amount = len(results)
+    if amount != 0:
+        LOGGER.info("Found a total of {} proxies.".format(len(results)))
+        filename = create_random_filename()
+        create_dir(PROXY_SCAN_RESULTS)
+        with open(PROXY_SCAN_RESULTS + "/" + filename + ".txt", "a+") as res:
+            for prox in results:
+                res.write(prox + "\n")
+        LOGGER.info("Results saved to: {}".format(PROXY_SCAN_RESULTS + "/" + filename + ".txt"))
+    else:
+        pass

@@ -78,8 +78,10 @@ if __name__ == '__main__':
                       help=argparse.SUPPRESS)
     args = opts.parse_args()
 
-    hide_banner(hide=True if args.banner else False,
-                legal=True if args.legal else False) if args.version is False else hide_banner(hide=True)
+    hide_banner(
+        hide=True if args.banner else False,
+        legal=True if args.legal else False
+    ) if args.version is False else hide_banner(hide=True)
 
     LOGGER.info("Checking program integrity..")
 

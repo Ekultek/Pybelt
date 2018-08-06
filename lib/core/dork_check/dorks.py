@@ -1,8 +1,9 @@
-import httplib2
 import re
+import httplib2
+
+from google import search
 
 from lib.core import settings
-from google import search
 from lib.core.settings import LOGGER
 from lib.core.settings import create_dir
 
