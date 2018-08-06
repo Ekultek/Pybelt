@@ -2,3 +2,4 @@
 *.iml
 *.xml
 .idea/*
+venv/*
